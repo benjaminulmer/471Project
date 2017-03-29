@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2017 at 09:51 PM
+-- Generation Time: Mar 29, 2017 at 07:03 PM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -51,9 +51,9 @@ CREATE TABLE IF NOT EXISTS `actors` (
 
 CREATE TABLE IF NOT EXISTS `awards` (
 `ID` int(11) NOT NULL,
-  `name` varchar(32) NOT NULL,
+  `name` varchar(64) NOT NULL,
   `year` year(4) NOT NULL,
-  `organization` varchar(32) NOT NULL
+  `organization` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `directors` (
 
 CREATE TABLE IF NOT EXISTS `films` (
 `ID` int(11) NOT NULL,
-  `name` varchar(32) NOT NULL,
+  `name` varchar(64) NOT NULL,
   `year` year(4) NOT NULL,
   `budget` int(11) NOT NULL,
   `director` int(11) NOT NULL
@@ -84,22 +84,12 @@ CREATE TABLE IF NOT EXISTS `films` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `film_nominated`
+-- Table structure for table `nominated`
 --
 
-CREATE TABLE IF NOT EXISTS `film_nominated` (
+CREATE TABLE IF NOT EXISTS `nominated` (
   `filmID` int(11) NOT NULL,
-  `awardID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `film_won`
---
-
-CREATE TABLE IF NOT EXISTS `film_won` (
-  `filmID` int(11) NOT NULL,
+  `personID` int(11) NOT NULL,
   `awardID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -115,28 +105,6 @@ CREATE TABLE IF NOT EXISTS `persons` (
   `sex` set('m','f') NOT NULL,
   `dateOfBirth` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `person_nominated`
---
-
-CREATE TABLE IF NOT EXISTS `person_nominated` (
-  `personID` int(11) NOT NULL,
-  `awardID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `person_won`
---
-
-CREATE TABLE IF NOT EXISTS `person_won` (
-  `personID` int(11) NOT NULL,
-  `awardID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -187,13 +155,26 @@ CREATE TABLE IF NOT EXISTS `similar_films` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `studios`
+--
+
+CREATE TABLE IF NOT EXISTS `studios` (
+`ID` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `someAt1` int(11) NOT NULL,
+  `someAt2` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `trailers`
 --
 
 CREATE TABLE IF NOT EXISTS `trailers` (
-  `name` varchar(32) NOT NULL,
+  `name` varchar(64) NOT NULL,
   `filmID` int(11) NOT NULL,
-  `trailer` varchar(32) NOT NULL
+  `trailer` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -204,8 +185,8 @@ CREATE TABLE IF NOT EXISTS `trailers` (
 
 CREATE TABLE IF NOT EXISTS `users` (
 `ID` int(11) NOT NULL,
-  `username` varchar(32) NOT NULL,
-  `passwordHash` varchar(32) NOT NULL
+  `username` varchar(64) NOT NULL,
+  `passwordHash` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -216,6 +197,29 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 CREATE TABLE IF NOT EXISTS `watched` (
   `userID` int(11) NOT NULL,
+  `filmID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `won`
+--
+
+CREATE TABLE IF NOT EXISTS `won` (
+  `filmID` int(11) NOT NULL,
+  `personID` int(11) NOT NULL,
+  `awardID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `worked_on`
+--
+
+CREATE TABLE IF NOT EXISTS `worked_on` (
+  `studioID` int(11) NOT NULL,
   `filmID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -254,34 +258,16 @@ ALTER TABLE `films`
  ADD PRIMARY KEY (`ID`), ADD KEY `director` (`director`);
 
 --
--- Indexes for table `film_nominated`
+-- Indexes for table `nominated`
 --
-ALTER TABLE `film_nominated`
- ADD PRIMARY KEY (`filmID`,`awardID`), ADD KEY `filmID` (`filmID`), ADD KEY `awardID` (`awardID`);
-
---
--- Indexes for table `film_won`
---
-ALTER TABLE `film_won`
- ADD PRIMARY KEY (`filmID`,`awardID`), ADD KEY `filmID` (`filmID`), ADD KEY `awardID` (`awardID`);
+ALTER TABLE `nominated`
+ ADD PRIMARY KEY (`filmID`,`personID`,`awardID`), ADD KEY `filmID` (`filmID`), ADD KEY `awardID` (`awardID`), ADD KEY `nominatedPerson` (`personID`);
 
 --
 -- Indexes for table `persons`
 --
 ALTER TABLE `persons`
  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `person_nominated`
---
-ALTER TABLE `person_nominated`
- ADD PRIMARY KEY (`personID`,`awardID`), ADD KEY `personNominatedAward` (`awardID`);
-
---
--- Indexes for table `person_won`
---
-ALTER TABLE `person_won`
- ADD PRIMARY KEY (`personID`,`awardID`), ADD KEY `filmID` (`personID`), ADD KEY `awardID` (`awardID`);
 
 --
 -- Indexes for table `recommended`
@@ -308,6 +294,12 @@ ALTER TABLE `similar_films`
  ADD PRIMARY KEY (`film1ID`,`film2ID`), ADD KEY `similarFilm2` (`film2ID`);
 
 --
+-- Indexes for table `studios`
+--
+ALTER TABLE `studios`
+ ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `trailers`
 --
 ALTER TABLE `trailers`
@@ -324,6 +316,18 @@ ALTER TABLE `users`
 --
 ALTER TABLE `watched`
  ADD PRIMARY KEY (`userID`,`filmID`), ADD KEY `userID` (`userID`), ADD KEY `filmID` (`filmID`);
+
+--
+-- Indexes for table `won`
+--
+ALTER TABLE `won`
+ ADD PRIMARY KEY (`filmID`,`awardID`,`personID`), ADD KEY `filmID` (`filmID`), ADD KEY `awardID` (`awardID`), ADD KEY `wonPerson` (`personID`);
+
+--
+-- Indexes for table `worked_on`
+--
+ALTER TABLE `worked_on`
+ ADD PRIMARY KEY (`studioID`,`filmID`), ADD KEY `workedOnFilm` (`filmID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -343,6 +347,11 @@ MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `persons`
 --
 ALTER TABLE `persons`
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `studios`
+--
+ALTER TABLE `studios`
 MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
@@ -379,32 +388,12 @@ ALTER TABLE `films`
 ADD CONSTRAINT `filmsDirector` FOREIGN KEY (`director`) REFERENCES `directors` (`ID`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `film_nominated`
+-- Constraints for table `nominated`
 --
-ALTER TABLE `film_nominated`
-ADD CONSTRAINT `filmNominatedAward` FOREIGN KEY (`awardID`) REFERENCES `awards` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `filmNominatedFilm` FOREIGN KEY (`filmID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `film_won`
---
-ALTER TABLE `film_won`
-ADD CONSTRAINT `wonAward` FOREIGN KEY (`awardID`) REFERENCES `awards` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `wonFilm` FOREIGN KEY (`filmID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `person_nominated`
---
-ALTER TABLE `person_nominated`
-ADD CONSTRAINT `personNominatedAward` FOREIGN KEY (`awardID`) REFERENCES `awards` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `personNominatedPerson` FOREIGN KEY (`personID`) REFERENCES `persons` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `person_won`
---
-ALTER TABLE `person_won`
-ADD CONSTRAINT `personWonAward` FOREIGN KEY (`awardID`) REFERENCES `awards` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `personWonPerson` FOREIGN KEY (`personID`) REFERENCES `persons` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `nominated`
+ADD CONSTRAINT `nominatedAward` FOREIGN KEY (`awardID`) REFERENCES `awards` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `nominatedFilm` FOREIGN KEY (`filmID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `nominatedPerson` FOREIGN KEY (`personID`) REFERENCES `persons` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `recommended`
@@ -424,15 +413,15 @@ ADD CONSTRAINT `reviewUserID` FOREIGN KEY (`userID`) REFERENCES `users` (`ID`) O
 -- Constraints for table `sequel_to`
 --
 ALTER TABLE `sequel_to`
-ADD CONSTRAINT `sequelSequel` FOREIGN KEY (`sequelID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `sequelFilm` FOREIGN KEY (`filmID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `sequelFilm` FOREIGN KEY (`filmID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `sequelSequel` FOREIGN KEY (`sequelID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `similar_films`
 --
 ALTER TABLE `similar_films`
-ADD CONSTRAINT `similarFilm2` FOREIGN KEY (`film2ID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `similarFilm1` FOREIGN KEY (`film1ID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `similarFilm1` FOREIGN KEY (`film1ID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `similarFilm2` FOREIGN KEY (`film2ID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `trailers`
@@ -446,6 +435,21 @@ ADD CONSTRAINT `trailerFilm` FOREIGN KEY (`filmID`) REFERENCES `films` (`ID`) ON
 ALTER TABLE `watched`
 ADD CONSTRAINT `watchedFilmID` FOREIGN KEY (`filmID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `watchedUserID` FOREIGN KEY (`userID`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `won`
+--
+ALTER TABLE `won`
+ADD CONSTRAINT `wonAward` FOREIGN KEY (`awardID`) REFERENCES `awards` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `wonFilm` FOREIGN KEY (`filmID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `wonPerson` FOREIGN KEY (`personID`) REFERENCES `persons` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `worked_on`
+--
+ALTER TABLE `worked_on`
+ADD CONSTRAINT `workedOnFilm` FOREIGN KEY (`filmID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `workedOnStudio` FOREIGN KEY (`studioID`) REFERENCES `studios` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
