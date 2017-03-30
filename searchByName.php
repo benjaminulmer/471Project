@@ -48,7 +48,7 @@
 		</form>
 		<font color="#3498DB"><center><h1>Search By Name</h1></center></font>
 		<center><form>
-			<input type="text" class="search" placeholder="Search..." required size="40">
+			<input type="text" class="search" size="30" placeholder="Search..." required>
 			<input type="submit" class="button" value="Go">
 		</form></center>
 	</body>
