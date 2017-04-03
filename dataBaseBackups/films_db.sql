@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2017 at 08:12 PM
+-- Generation Time: Apr 03, 2017 at 08:59 PM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -32,6 +32,17 @@ CREATE TABLE IF NOT EXISTS `acted_in` (
   `role` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `acted_in`
+--
+
+INSERT INTO `acted_in` (`actorID`, `filmID`, `role`) VALUES
+(2, 1, 'Bruce Wayne / Batman'),
+(2, 3, 'Bruce Wayne / Batman'),
+(3, 1, 'the Joker'),
+(4, 3, 'Emmet Brickowski'),
+(5, 3, 'Wyldstyle / Lucy');
+
 -- --------------------------------------------------------
 
 --
@@ -40,8 +51,18 @@ CREATE TABLE IF NOT EXISTS `acted_in` (
 
 CREATE TABLE IF NOT EXISTS `actors` (
   `ID` int(11) NOT NULL,
-  `someAtt` varchar(32) NOT NULL
+  `favRole` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `actors`
+--
+
+INSERT INTO `actors` (`ID`, `favRole`) VALUES
+(2, NULL),
+(3, NULL),
+(4, NULL),
+(5, NULL);
 
 -- --------------------------------------------------------
 
@@ -54,7 +75,16 @@ CREATE TABLE IF NOT EXISTS `awards` (
   `name` varchar(64) NOT NULL,
   `year` year(4) NOT NULL,
   `organization` varchar(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `awards`
+--
+
+INSERT INTO `awards` (`ID`, `name`, `year`, `organization`) VALUES
+(1, 'Truly Moving Picture Award', 2017, 'Heartland Film Festival'),
+(2, 'Truly Moving Picture Award', 2014, 'Heartland Film Festival'),
+(3, 'Favorite Movie Actor', 2014, 'Kid''s Choice Awards');
 
 -- --------------------------------------------------------
 
@@ -64,8 +94,16 @@ CREATE TABLE IF NOT EXISTS `awards` (
 
 CREATE TABLE IF NOT EXISTS `directors` (
   `ID` int(11) NOT NULL,
-  `someAtt` int(32) NOT NULL
+  `favFilm` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `directors`
+--
+
+INSERT INTO `directors` (`ID`, `favFilm`) VALUES
+(1, NULL),
+(6, NULL);
 
 -- --------------------------------------------------------
 
@@ -82,7 +120,15 @@ CREATE TABLE IF NOT EXISTS `films` (
   `boxOffice` int(11) NOT NULL,
   `description` text NOT NULL,
   `director` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `films`
+--
+
+INSERT INTO `films` (`ID`, `name`, `year`, `runtime`, `budget`, `boxOffice`, `description`, `director`) VALUES
+(1, 'The Lego Batman Movie', 2017, 104, 80000000, 297300000, 'Really cool awesome movie about LEGO and Batman is in it too.', 1),
+(3, 'The Lego Movie', 2014, 100, 60000000, 469200000, 'Another cool movie about LEGO. Batman is also in this one, but not as much.', 6);
 
 -- --------------------------------------------------------
 
@@ -94,6 +140,20 @@ CREATE TABLE IF NOT EXISTS `film_genres` (
   `filmID` int(11) NOT NULL,
   `genre` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `film_genres`
+--
+
+INSERT INTO `film_genres` (`filmID`, `genre`) VALUES
+(1, 'Action'),
+(1, 'Animation'),
+(1, 'Comedy'),
+(1, 'Family'),
+(3, 'Action'),
+(3, 'Animation'),
+(3, 'Comedy'),
+(3, 'Family');
 
 -- --------------------------------------------------------
 
@@ -107,6 +167,13 @@ CREATE TABLE IF NOT EXISTS `nominated` (
   `awardID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `nominated`
+--
+
+INSERT INTO `nominated` (`filmID`, `personID`, `awardID`) VALUES
+(3, 2, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -118,7 +185,19 @@ CREATE TABLE IF NOT EXISTS `persons` (
   `name` varchar(64) NOT NULL,
   `dateOfBirth` date NOT NULL,
   `dateOfDeath` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `persons`
+--
+
+INSERT INTO `persons` (`ID`, `name`, `dateOfBirth`, `dateOfDeath`) VALUES
+(1, 'Chris McKay', '0000-00-00', '0000-00-00'),
+(2, 'Will Arnett', '1970-05-04', '0000-00-00'),
+(3, 'Zach Galifianakis', '1969-10-01', '0000-00-00'),
+(4, 'Chris Pratt', '1979-06-21', '0000-00-00'),
+(5, 'Elizabeth Banks', '1974-02-10', '0000-00-00'),
+(6, 'Phil Lord', '1975-07-12', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -130,6 +209,13 @@ CREATE TABLE IF NOT EXISTS `recommended` (
   `userID` int(11) NOT NULL,
   `filmID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `recommended`
+--
+
+INSERT INTO `recommended` (`userID`, `filmID`) VALUES
+(2, 1);
 
 -- --------------------------------------------------------
 
@@ -144,6 +230,14 @@ CREATE TABLE IF NOT EXISTS `review` (
   `review` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `review`
+--
+
+INSERT INTO `review` (`userID`, `filmID`, `rating`, `review`) VALUES
+(1, 1, 8, 'Cool movie. I liked it a lot :D'),
+(2, 3, 9, 'Good movie, would watch again.');
+
 -- --------------------------------------------------------
 
 --
@@ -154,6 +248,13 @@ CREATE TABLE IF NOT EXISTS `sequel_to` (
   `baseFilmID` int(11) NOT NULL,
   `sequelID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sequel_to`
+--
+
+INSERT INTO `sequel_to` (`baseFilmID`, `sequelID`) VALUES
+(3, 1);
 
 -- --------------------------------------------------------
 
@@ -166,6 +267,13 @@ CREATE TABLE IF NOT EXISTS `similar_films` (
   `film2ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `similar_films`
+--
+
+INSERT INTO `similar_films` (`film1ID`, `film2ID`) VALUES
+(1, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -177,7 +285,14 @@ CREATE TABLE IF NOT EXISTS `studios` (
   `name` varchar(64) NOT NULL,
   `founded` date NOT NULL,
   `headquarters` varchar(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `studios`
+--
+
+INSERT INTO `studios` (`ID`, `name`, `founded`, `headquarters`) VALUES
+(1, 'Warner Bros. Animation', '1980-01-01', 'Burbank, California');
 
 -- --------------------------------------------------------
 
@@ -191,6 +306,13 @@ CREATE TABLE IF NOT EXISTS `trailers` (
   `trailer` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `trailers`
+--
+
+INSERT INTO `trailers` (`name`, `filmID`, `trailer`) VALUES
+('Trailer 1', 1, 'https://www.youtube.com/watch?v=ijZDOyldztw');
+
 -- --------------------------------------------------------
 
 --
@@ -202,7 +324,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(64) NOT NULL,
   `passwordHash` varchar(64) NOT NULL,
   `moderator` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`ID`, `username`, `passwordHash`, `moderator`) VALUES
+(1, 'averageUser', 'password', 0),
+(2, 'moderator', 'password', 1);
 
 -- --------------------------------------------------------
 
@@ -214,6 +344,15 @@ CREATE TABLE IF NOT EXISTS `watched` (
   `userID` int(11) NOT NULL,
   `filmID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `watched`
+--
+
+INSERT INTO `watched` (`userID`, `filmID`) VALUES
+(1, 1),
+(1, 3),
+(2, 3);
 
 -- --------------------------------------------------------
 
@@ -227,6 +366,14 @@ CREATE TABLE IF NOT EXISTS `won` (
   `awardID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `won`
+--
+
+INSERT INTO `won` (`filmID`, `personID`, `awardID`) VALUES
+(1, 1, 1),
+(3, 6, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -235,9 +382,16 @@ CREATE TABLE IF NOT EXISTS `won` (
 
 CREATE TABLE IF NOT EXISTS `worked_on` (
   `studioID` int(11) NOT NULL,
-  `filmID` int(11) NOT NULL,
-  `role` varchar(64) NOT NULL
+  `filmID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `worked_on`
+--
+
+INSERT INTO `worked_on` (`studioID`, `filmID`) VALUES
+(1, 1),
+(1, 3);
 
 --
 -- Indexes for dumped tables
@@ -253,7 +407,7 @@ ALTER TABLE `acted_in`
 -- Indexes for table `actors`
 --
 ALTER TABLE `actors`
- ADD PRIMARY KEY (`ID`);
+ ADD PRIMARY KEY (`ID`), ADD KEY `favRole` (`favRole`);
 
 --
 -- Indexes for table `awards`
@@ -265,7 +419,7 @@ ALTER TABLE `awards`
 -- Indexes for table `directors`
 --
 ALTER TABLE `directors`
- ADD PRIMARY KEY (`ID`);
+ ADD PRIMARY KEY (`ID`), ADD KEY `favFilm` (`favFilm`);
 
 --
 -- Indexes for table `films`
@@ -359,27 +513,27 @@ ALTER TABLE `worked_on`
 -- AUTO_INCREMENT for table `awards`
 --
 ALTER TABLE `awards`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `films`
 --
 ALTER TABLE `films`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `persons`
 --
 ALTER TABLE `persons`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `studios`
 --
 ALTER TABLE `studios`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --
@@ -395,13 +549,15 @@ ADD CONSTRAINT `actedInFilm` FOREIGN KEY (`filmID`) REFERENCES `films` (`ID`) ON
 -- Constraints for table `actors`
 --
 ALTER TABLE `actors`
+ADD CONSTRAINT `actorsFavFilm` FOREIGN KEY (`favRole`) REFERENCES `films` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE,
 ADD CONSTRAINT `actorsPerson` FOREIGN KEY (`ID`) REFERENCES `persons` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `directors`
 --
 ALTER TABLE `directors`
-ADD CONSTRAINT `directorsPerson` FOREIGN KEY (`ID`) REFERENCES `actors` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `directorsPerson` FOREIGN KEY (`ID`) REFERENCES `persons` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `directorsFavFilm` FOREIGN KEY (`favFilm`) REFERENCES `films` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `films`
