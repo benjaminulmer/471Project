@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2017 at 07:03 PM
+-- Generation Time: Apr 03, 2017 at 08:12 PM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -77,9 +77,23 @@ CREATE TABLE IF NOT EXISTS `films` (
 `ID` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
   `year` year(4) NOT NULL,
+  `runtime` int(11) NOT NULL,
   `budget` int(11) NOT NULL,
+  `boxOffice` int(11) NOT NULL,
+  `description` text NOT NULL,
   `director` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `film_genres`
+--
+
+CREATE TABLE IF NOT EXISTS `film_genres` (
+  `filmID` int(11) NOT NULL,
+  `genre` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -102,8 +116,8 @@ CREATE TABLE IF NOT EXISTS `nominated` (
 CREATE TABLE IF NOT EXISTS `persons` (
 `ID` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
-  `sex` set('m','f') NOT NULL,
-  `dateOfBirth` date NOT NULL
+  `dateOfBirth` date NOT NULL,
+  `dateOfDeath` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -127,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `review` (
   `userID` int(11) NOT NULL,
   `filmID` int(11) NOT NULL,
   `rating` int(11) NOT NULL,
-  `review` varchar(1024) NOT NULL
+  `review` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -137,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `review` (
 --
 
 CREATE TABLE IF NOT EXISTS `sequel_to` (
-  `filmID` int(11) NOT NULL,
+  `baseFilmID` int(11) NOT NULL,
   `sequelID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -161,8 +175,8 @@ CREATE TABLE IF NOT EXISTS `similar_films` (
 CREATE TABLE IF NOT EXISTS `studios` (
 `ID` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
-  `someAt1` int(11) NOT NULL,
-  `someAt2` int(11) NOT NULL
+  `founded` date NOT NULL,
+  `headquarters` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -186,7 +200,8 @@ CREATE TABLE IF NOT EXISTS `trailers` (
 CREATE TABLE IF NOT EXISTS `users` (
 `ID` int(11) NOT NULL,
   `username` varchar(64) NOT NULL,
-  `passwordHash` varchar(64) NOT NULL
+  `passwordHash` varchar(64) NOT NULL,
+  `moderator` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -220,7 +235,8 @@ CREATE TABLE IF NOT EXISTS `won` (
 
 CREATE TABLE IF NOT EXISTS `worked_on` (
   `studioID` int(11) NOT NULL,
-  `filmID` int(11) NOT NULL
+  `filmID` int(11) NOT NULL,
+  `role` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -258,6 +274,12 @@ ALTER TABLE `films`
  ADD PRIMARY KEY (`ID`), ADD KEY `director` (`director`);
 
 --
+-- Indexes for table `film_genres`
+--
+ALTER TABLE `film_genres`
+ ADD PRIMARY KEY (`filmID`,`genre`);
+
+--
 -- Indexes for table `nominated`
 --
 ALTER TABLE `nominated`
@@ -285,7 +307,7 @@ ALTER TABLE `review`
 -- Indexes for table `sequel_to`
 --
 ALTER TABLE `sequel_to`
- ADD PRIMARY KEY (`filmID`,`sequelID`), ADD KEY `sequelSequel` (`sequelID`);
+ ADD PRIMARY KEY (`baseFilmID`,`sequelID`), ADD KEY `sequelSequel` (`sequelID`);
 
 --
 -- Indexes for table `similar_films`
@@ -388,6 +410,12 @@ ALTER TABLE `films`
 ADD CONSTRAINT `filmsDirector` FOREIGN KEY (`director`) REFERENCES `directors` (`ID`) ON UPDATE CASCADE;
 
 --
+-- Constraints for table `film_genres`
+--
+ALTER TABLE `film_genres`
+ADD CONSTRAINT `genreFilm` FOREIGN KEY (`filmID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `nominated`
 --
 ALTER TABLE `nominated`
@@ -413,8 +441,8 @@ ADD CONSTRAINT `reviewUserID` FOREIGN KEY (`userID`) REFERENCES `users` (`ID`) O
 -- Constraints for table `sequel_to`
 --
 ALTER TABLE `sequel_to`
-ADD CONSTRAINT `sequelFilm` FOREIGN KEY (`filmID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `sequelSequel` FOREIGN KEY (`sequelID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `sequelSequel` FOREIGN KEY (`sequelID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `sequelBase` FOREIGN KEY (`baseFilmID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `similar_films`
