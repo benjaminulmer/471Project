@@ -19,7 +19,7 @@
 				die("Connection failed".$conn->connect_error);
 			}
 			
-			$filmID = 3; // This determines which film to show info for
+			$filmID = 1; // This determines which film to show info for
 			
 			// **** Film information **** //
 			$sql = "SELECT * 
@@ -164,6 +164,23 @@
 					echo $row["name"]." (".$row["year"].")"."<br>";
 				}
 			}	
+			
+			// **** Trailers **** //
+			$sql = "SELECT * 
+			        FROM trailers t
+					WHERE t.filmID = ".$filmID;
+			
+			$result = $conn->query($sql);
+			if ($result == NULL) {
+				die("Failed");
+			}
+			
+			if($result->num_rows > 0){
+				echo "<br>Trailers:<br>";
+				while($row = $result->fetch_assoc()){
+					echo $row["name"].": ".$row["trailer"]."<br>";
+				}
+			}
 			
 			$conn-> close();
 		?>
