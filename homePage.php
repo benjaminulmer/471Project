@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 
 <html>
@@ -51,19 +54,32 @@
 	</style>
 	
 	<body>
+		
+			
 		<form action="loginPage.php">
-			<input type="submit" class="button2" value="Log In">
+		<input type="submit" class="button2" value="Log In">
 		</form>
+			
+		
+		
+		
 		<form action="signUpPage.php">
 			<input type="submit" class="button3" value="Sign Up">
 		</form>
 		<font color="#3498DB"><center><h1>Couldn't Come Up With A Good Name Movie Database</h1></center></font>
-		<center><form action="searchByName.php">
-			<input type="submit" class="button" value="Search By Name">
-		</form>
-		<span style="display: inline-block; width: 1px;"></span>
-		<form action="searchByFilter.php">
+		<center>
+			<form action="searchByName.php">
+				<input type="submit" class="button" value="Search By Name">
+			</form>
+			<span style="display: inline-block; width: 1px;"></span>
+			<form action="searchByFilter.php">
 			<input type="submit" class="button" value="Search By Filter">
-		</form></center>
+			</form>
+		</center>
+		<?php
+		// Echo session variables that were set on previous page
+		echo "Current user is " . $_SESSION["login_user"] . ".<br>";
+		?>
+		
 	</body>
 </html>

@@ -1,5 +1,33 @@
 <!DOCTYPE html>
-
+<?php
+   include("config.php");
+   session_start();
+   
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+      // username and password sent from form 
+      
+      $myusername = mysqli_real_escape_string($db,$_POST['username']);
+      $mypassword = mysqli_real_escape_string($db,$_POST['password']); 
+      
+      $sql = "SELECT username FROM users WHERE username = '$myusername' and passwordHash = '$mypassword'";
+      $result = mysqli_query($db,$sql);
+      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+      $active = $row['active'];
+      
+      $count = mysqli_num_rows($result);
+      
+      // If result matched $myusername and $mypassword, table row must be 1 row
+		
+      if($count == 1) {
+         
+         $_SESSION['login_user'] = $myusername;
+         
+         header("location: homePage.php");
+      }else {
+         echo  "Your Login Name or Password is invalid";
+      }
+   }
+?>
 <html>
 	<head>
 		<title>Login Page</title>
@@ -75,10 +103,10 @@
 			<input type="submit" class="button4" value="Sign Up">
 		</form>
 		<font color="#3498DB"><center><h1>Sign In</h1></center></font>
-		<center><form>
+		<center><form action = "" method = "post">
 			<font color="#3498DB"><b>Username:</b></font>
 			<span style="display: inline-block; width: 3px;"></span>
-			<input type="text" name="usr"><br><br>
+			<input type="text" name="username"><br><br>
 			<font color="#3498DB"><b>Password:</b></font>
 			<span style="display: inline-block; width: 7px;"></span>
 			<input type="password" name="password"><br><br>
