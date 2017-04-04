@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Films</title>
+		<title>Film</title>
 	</head>
 	<body>
 		<h1>Film</h1>
@@ -19,7 +19,7 @@
 				die("Connection failed".$conn->connect_error);
 			}
 			
-			$filmID = 3; // This determines which film to show info for
+			$filmID = 1; // This determines which film to show info for
 			
 			// **** Film information **** //
 			$sql = "SELECT * 
@@ -70,7 +70,7 @@
 			$sql = "SELECT * 
 			        FROM directors d, persons p
 					WHERE d.ID = ".$dirID."
-					      AND p.ID = ".$dirID;
+					      AND p.ID = d.ID";
 			
 			$result = $conn->query($sql);
 			if ($result == NULL) {
@@ -78,7 +78,7 @@
 			}
 			
 			// Director name
-			if($result->num_rows >0) {
+			if($result->num_rows > 0) {
 				$row = $result->fetch_assoc();
 				echo "<br>Director: ".$row["name"]."<br>"; 
 			}
@@ -99,7 +99,7 @@
 			}
 			
 			// [person] as [role]
-			if($result->num_rows >0){
+			if($result->num_rows > 0){
 				echo "<br>Cast:<br>";
 				while($row = $result->fetch_assoc()){
 					echo $row["name"]." as ".$row["role"]."<br>";
@@ -117,7 +117,8 @@
 				die("Failed");
 			}
 			
-			if($result->num_rows >0){
+			// Print all studios
+			if($result->num_rows > 0){
 				echo "<br>Studios:<br>";
 				while($row = $result->fetch_assoc()){
 					echo $row["name"]."<br>";
