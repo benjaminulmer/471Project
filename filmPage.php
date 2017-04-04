@@ -19,7 +19,7 @@
 				die("Connection failed".$conn->connect_error);
 			}
 			
-			$filmID = 1; // This determines which film to show info for
+			$filmID = 3; // This determines which film to show info for
 			
 			// **** Film information **** //
 			$sql = "SELECT * 
@@ -125,6 +125,46 @@
 				}
 			}		  
 
+			// **** Sequels **** //
+			$sql = "SELECT * 
+			        FROM films f, sequel_to s
+					WHERE s.sequelID = f.ID
+						  AND s.baseFilmID = ".$filmID."
+					ORDER BY f.year";
+			
+			$result = $conn->query($sql);
+			if ($result == NULL) {
+				die("Failed");
+			}
+			
+			if($result->num_rows > 0){
+				echo "<br>Sequels:<br>";
+				while($row = $result->fetch_assoc()){
+					echo $row["name"]." (".$row["year"].")"."<br>";
+				}
+			}	
+			
+			// **** Similar Films **** //
+			$sql = "SELECT * 
+			        FROM films f, similar_films s
+					WHERE (s.film1ID = f.ID
+						  AND s.film2ID = ".$filmID.") OR
+						  (s.film2ID = f.ID
+						  AND s.film1ID = ".$filmID.")
+					ORDER BY f.year";
+			
+			$result = $conn->query($sql);
+			if ($result == NULL) {
+				die("Failed");
+			}
+			
+			if($result->num_rows > 0){
+				echo "<br>Similar films:<br>";
+				while($row = $result->fetch_assoc()){
+					echo $row["name"]." (".$row["year"].")"."<br>";
+				}
+			}	
+			
 			$conn-> close();
 		?>
 	</body>
