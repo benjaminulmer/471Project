@@ -8,7 +8,7 @@
 	<body>
 		<h1>Film</h1>
 		<?php
-			// put your code here
+			// Connect to the database
 			$servername = "localhost";		  //should be same for you
 			$username = "root";				 //same here
 			$password = "";					 //your localhost root password
@@ -19,9 +19,9 @@
 				die("Connection failed".$conn->connect_error);
 			}
 			
-			$filmID = 1;
+			$filmID = 3; // This determines which film to show info for
 			
-			// Film information
+			// **** Film information **** //
 			$sql = "SELECT * 
 			        FROM films f
 			        WHERE f.ID = ".$filmID;
@@ -31,6 +31,7 @@
 				die("Failed");
 			}
 			
+			// Basic film info
 			$row = $result->fetch_assoc();
 			echo "Name: ".$row["name"]."<br>"; 
 			echo "Year: ".$row["year"]."<br>";
@@ -42,7 +43,7 @@
 			$description = "Description: ".$row["description"]."<br>";
 			$dirID = $row["director"];
 			
-			// Genres
+			// **** Genres **** //
 			$sql = "SELECT * 
 			        FROM film_genres g
 			        WHERE g.filmID = ".$filmID;
@@ -52,6 +53,7 @@
 				die("Failed");
 			}
 			
+			// Pretty print each genre
 			if($result->num_rows > 0){
 				echo "Genres: ";
 				$i = 0;
@@ -64,7 +66,7 @@
 				}
 			}
 			
-			// Director information
+			// **** Director information **** //
 			$sql = "SELECT * 
 			        FROM directors d, persons p
 					WHERE d.ID = ".$dirID."
@@ -75,15 +77,16 @@
 				die("Failed");
 			}
 			
+			// Director name
 			if($result->num_rows >0) {
 				$row = $result->fetch_assoc();
 				echo "<br>Director: ".$row["name"]."<br>"; 
 			}
 			
-			// Echo description now
+			// Print out desctiption now (after director)
 			echo "<br>".$description;
 			
-			// Cast
+			// **** Cast information **** //
 			$sql = "SELECT * 
 			        FROM actors a, persons p, acted_in ac
 					WHERE a.ID = p.ID
@@ -95,6 +98,7 @@
 				die("Failed");
 			}
 			
+			// [person] as [role]
 			if($result->num_rows >0){
 				echo "<br>Cast:<br>";
 				while($row = $result->fetch_assoc()){
@@ -102,7 +106,7 @@
 				}
 			}			
 						  
-			// Studios		  
+			// **** Studio information **** //		  
 			$sql = "SELECT * 
 			        FROM studios s, worked_on w
 					WHERE s.ID = w.studioID
@@ -120,7 +124,7 @@
 				}
 			}		  
 
-			$conn-> close();			//close the connection to database
+			$conn-> close();
 		?>
 	</body>
 </html>
