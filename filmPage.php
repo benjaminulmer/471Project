@@ -8,6 +8,18 @@
 	<body>
 		<h1>Film</h1>
 		<?php
+		
+			/*
+			Code to open page will look something like this:
+			
+			<form action="filmPage.php" method="get">
+				<input type="submit" class="button" name="ID" value="3">
+			</form>
+			
+			can also be accessed directly with .../filmPage.php?ID=3
+			*/
+		
+		
 			// Connect to the database
 			$servername = "localhost";		  //should be same for you
 			$username = "root";				 //same here
@@ -19,7 +31,7 @@
 				die("Connection failed".$conn->connect_error);
 			}
 			
-			$filmID = 1; // This determines which film to show info for
+			$filmID = $_GET["ID"]; // This determines which film to show info for
 			
 			// **** Film information **** //
 			$sql = "SELECT * 

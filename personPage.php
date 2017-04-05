@@ -8,6 +8,17 @@
 	<body>
 		<h1>Person</h1>
 		<?php
+		
+			/*
+			Code to open page will look something like this:
+			
+			<form action="personPage.php" method="get">
+				<input type="submit" class="button" name="ID" value="3">
+			</form>
+			
+			can also be accessed directly with .../personPage.php?ID=3
+			*/
+		
 			// Connect to the database
 			$servername = "localhost";		  //should be same for you
 			$username = "root";				 //same here
@@ -19,7 +30,7 @@
 				die("Connection failed".$conn->connect_error);
 			}
 			
-			$personID = 6; // This determines which person to show info for
+			$personID = $_GET["ID"]; // This determines which person to show info for
 			
 			// **** Person information **** //
 			$sql = "SELECT * 
