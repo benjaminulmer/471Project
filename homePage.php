@@ -55,18 +55,32 @@ session_start();
 	
 	<body>
 		
+		<?php
+		if (isset($_SESSION['login_user'])){
+			?>
 			
-		<form action="loginPage.php">
-		<input type="submit" class="button2" value="Log In">
-		</form>
-			
-		
-		
-		
-		<form action="signUpPage.php">
+			<form action="logout.php">
+			<input type="submit" class="button3" value="Log Out: <?php echo $_SESSION['login_user']; ?>">
+			</form>
+			<?php
+		} else {
+		?>
+			<form action="loginPage.php">
+			<input type="submit" class="button2" value="Log In">
+			</form>
+			<form action="signUpPage.php">
 			<input type="submit" class="button3" value="Sign Up">
-		</form>
-		<font color="#3498DB"><center><h1>Couldn't Come Up With A Good Name Movie Database</h1></center></font>
+			</form>
+			<?php
+		}
+		?>
+			
+			
+		
+		
+		
+
+		<font color="#3498DB"><center><h1>Ultimate Movie Database of Ultimate Destiny</h1></center></font>
 		<center>
 			<form action="searchByName.php">
 				<input type="submit" class="button" value="Search By Name">
@@ -76,10 +90,7 @@ session_start();
 			<input type="submit" class="button" value="Search By Filter">
 			</form>
 		</center>
-		<?php
-		// Echo session variables that were set on previous page
-		echo "Current user is " . $_SESSION["login_user"] . ".<br>";
-		?>
+
 		
 	</body>
 </html>

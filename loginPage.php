@@ -96,9 +96,7 @@
 		<form action="homePage.php">
 			<input type="submit" class="button2" value="Back">
 		</form>
-		<form action="loginPage.php">
-			<input type="submit" class="button3" value="Log In">
-		</form>
+
 		<form action="signUpPage.php">
 			<input type="submit" class="button4" value="Sign Up">
 		</form>
