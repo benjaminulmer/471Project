@@ -66,10 +66,7 @@
 			<input type="submit" class="button2" value="Back">
 		</form>
 		<form action="loginPage.php">
-			<input type="submit" class="button3" value="Log In">
-		</form>
-		<form action="signUpPage.php">
-			<input type="submit" class="button4" value="Sign Up">
+			<input type="submit" class="button4" value="Log In">
 		</form>
 		<font color="#3498DB"><center><h1>Create An Account</h1></center></font>
 		<center><form>
