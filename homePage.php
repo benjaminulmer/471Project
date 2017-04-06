@@ -74,11 +74,6 @@ session_start();
 			<?php
 		}
 		?>
-			
-			
-		
-		
-		
 
 		<font color="#3498DB"><center><h1>Ultimate Movie Database of Ultimate Destiny</h1></center></font>
 		<center>

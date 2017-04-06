@@ -55,7 +55,22 @@
 			$description = "Description: ".$row["description"]."<br>";
 			$dirID = $row["director"];
 			
-			// **** Genres **** //
+			genres();
+			director();
+			echo "<br>".$description;
+			cast();
+			awards();
+			studios();
+			sequelsAndSimilar();
+			trailers();
+			reviews();
+			
+			$conn-> close();
+			
+		// Prints genres	
+		function genres() {
+			global $filmID, $conn;
+			
 			$sql = "SELECT * 
 			        FROM film_genres g
 			        WHERE g.filmID = ".$filmID;
@@ -77,12 +92,16 @@
 					$i++;
 				}
 			}
+		}	
 			
-			// **** Director information **** //
+		// Prints director
+		function director() {
+			global $dirID, $conn;
+			
 			$sql = "SELECT * 
-			        FROM directors d, persons p
+					FROM directors d, persons p
 					WHERE d.ID = ".$dirID."
-					      AND p.ID = d.ID";
+						  AND p.ID = d.ID";
 			
 			$result = $conn->query($sql);
 			if ($result == NULL) {
@@ -94,15 +113,16 @@
 				$row = $result->fetch_assoc();
 				echo "<br>Director: ".$row["name"]."<br>"; 
 			}
+		}
+		
+		// Prints cast
+		function cast() {
+			global $filmID, $conn;
 			
-			// Print out desctiption now (after director)
-			echo "<br>".$description;
-			
-			// **** Cast information **** //
 			$sql = "SELECT * 
-			        FROM actors a, persons p, acted_in ac
+					FROM actors a, persons p, acted_in ac
 					WHERE a.ID = p.ID
-					      AND a.ID = ac.actorID
+						  AND a.ID = ac.actorID
 						  AND ac.filmID = ".$filmID;
 			
 			$result = $conn->query($sql);
@@ -116,9 +136,58 @@
 				while($row = $result->fetch_assoc()){
 					echo $row["name"]." as ".$row["role"]."<br>";
 				}
-			}			
-						  
-			// **** Studio information **** //		  
+			}	
+		}
+		
+		// Prints awards
+		function awards() {
+			global $filmID, $conn;
+			
+			// Awards won
+			$sql = "SELECT p.Name AS pName, a.name AS aName, a.year, a.organization
+			        FROM awards a, won w, persons p
+					WHERE w.personID = p.ID
+					      AND w.awardID = a.ID
+						  AND w.filmID = ".$filmID;
+
+			$result = $conn->query($sql);
+			if ($result == NULL) {
+				die("Failed");
+			}
+			
+			// Print out awards
+			if($result->num_rows > 0){
+				echo "<br>Awards won:<br>";
+				while($row = $result->fetch_assoc()){
+					echo $row["pName"]." for ".$row["organization"]." ".$row["aName"]." ".$row["year"]."<br>";
+				}
+			}
+			
+			// Awards nominated
+			$sql = "SELECT p.Name AS pName, a.name AS aName, a.year, a.organization
+			        FROM awards a, nominated w, persons p
+					WHERE w.personID = p.ID
+					      AND w.awardID = a.ID
+						  AND w.filmID = ".$filmID;
+
+			$result = $conn->query($sql);
+			if ($result == NULL) {
+				die("Failed");
+			}
+			
+			// Print out awards
+			if($result->num_rows > 0){
+				echo "<br>Awards nominated:<br>";
+				while($row = $result->fetch_assoc()){
+					echo $row["pName"]." for ".$row["organization"]." ".$row["aName"]." ".$row["year"]."<br>";
+				}
+			}
+		}
+		
+		// Prints studios
+		function studios() {
+			global $filmID, $conn;
+						
 			$sql = "SELECT * 
 			        FROM studios s, worked_on w
 					WHERE s.ID = w.studioID
@@ -129,15 +198,20 @@
 				die("Failed");
 			}
 			
-			// Print all studios
+			// Print out studios
 			if($result->num_rows > 0){
 				echo "<br>Studios:<br>";
 				while($row = $result->fetch_assoc()){
 					echo $row["name"]."<br>";
 				}
-			}		  
-
-			// **** Sequels **** //
+			}	
+		}
+		
+		// Prints sequels and similar films
+		function sequelsAndSimilar() {
+			global $filmID, $conn;
+			
+			// Sequels
 			$sql = "SELECT * 
 			        FROM films f, sequel_to s
 					WHERE s.sequelID = f.ID
@@ -149,6 +223,7 @@
 				die("Failed");
 			}
 			
+			// Print out sequels
 			if($result->num_rows > 0){
 				echo "<br>Sequels:<br>";
 				while($row = $result->fetch_assoc()){
@@ -156,7 +231,7 @@
 				}
 			}	
 			
-			// **** Similar Films **** //
+			// Similar films
 			$sql = "SELECT * 
 			        FROM films f, similar_films s
 					WHERE (s.film1ID = f.ID
@@ -170,14 +245,19 @@
 				die("Failed");
 			}
 			
+			// Print out similar films
 			if($result->num_rows > 0){
 				echo "<br>Similar films:<br>";
 				while($row = $result->fetch_assoc()){
 					echo $row["name"]." (".$row["year"].")"."<br>";
 				}
-			}	
+			}
+		}
+		
+		// Prints trailers
+		function trailers() {
+			global $filmID, $conn;
 			
-			// **** Trailers **** //
 			$sql = "SELECT * 
 			        FROM trailers t
 					WHERE t.filmID = ".$filmID;
@@ -187,14 +267,39 @@
 				die("Failed");
 			}
 			
+			// Print out trailers
 			if($result->num_rows > 0){
 				echo "<br>Trailers:<br>";
 				while($row = $result->fetch_assoc()){
 					echo $row["name"].": ".$row["trailer"]."<br>";
 				}
 			}
+		}
+		
+		// Prints reviews
+		function reviews() {
+			global $filmID, $conn;
 			
-			$conn-> close();
+			$sql = "SELECT * 
+			        FROM reviews r, users u
+					WHERE u.ID = r.userID
+					      AND r.filmID = ".$filmID;
+			
+			$result = $conn->query($sql);
+			if ($result == NULL) {
+				die("Failed");
+			}
+			
+			// Print out reviews
+			if($result->num_rows > 0){
+				echo "<br>Reviews:<br>";
+				while($row = $result->fetch_assoc()){
+					echo $row["username"].": ".$row["rating"]."/10<br>";
+					echo $row["review"]."<br>";
+				}
+			}
+		}
+		
 		?>
 	</body>
 </html>

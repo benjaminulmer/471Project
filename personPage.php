@@ -18,7 +18,8 @@
 			
 			can also be accessed directly with .../personPage.php?ID=3
 			*/
-		
+	
+	
 			// Connect to the database
 			$servername = "localhost";		  //should be same for you
 			$username = "root";				 //same here
@@ -131,6 +132,48 @@
 				}
 			}		  
 
+			// **** Awards **** //
+			// Awards won
+			$sql = "SELECT f.Name AS fName, a.name AS aName, a.year, a.organization
+			        FROM awards a, won w, films f
+					WHERE w.awardID = a.ID
+						  AND w.filmID = f.ID
+						  AND w.personID = ".$personID;
+
+			$result = $conn->query($sql);
+			if ($result == NULL) {
+				die("Failed");
+			}
+			
+			// Print out awards
+			if($result->num_rows > 0){
+				echo "<br>Awards won:<br>";
+				while($row = $result->fetch_assoc()){
+					echo $row["fName"]." for ".$row["organization"]." ".$row["aName"]." ".$row["year"]."<br>";
+				}
+			}
+			
+			// Awards nominated
+			$sql = "SELECT f.Name AS fName, a.name AS aName, a.year, a.organization
+			        FROM awards a, nominated w, films f
+					WHERE w.awardID = a.ID
+						  AND w.filmID = f.ID
+						  AND w.personID = ".$personID;
+
+			$result = $conn->query($sql);
+			if ($result == NULL) {
+				die("Failed");
+			}
+			
+			// Print out awards
+			if($result->num_rows > 0){
+				echo "<br>Awards nominated:<br>";
+				while($row = $result->fetch_assoc()){
+					echo $row["fName"]." for ".$row["organization"]." ".$row["aName"]." ".$row["year"]."<br>";
+				}
+			}
+			
+			
 			$conn-> close();
 		?>
 	</body>
