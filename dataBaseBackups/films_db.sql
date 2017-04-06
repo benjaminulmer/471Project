@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2017 at 08:59 PM
+-- Generation Time: Apr 06, 2017 at 08:13 PM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -102,8 +102,8 @@ CREATE TABLE IF NOT EXISTS `directors` (
 --
 
 INSERT INTO `directors` (`ID`, `favFilm`) VALUES
-(1, NULL),
-(6, NULL);
+(6, NULL),
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -220,10 +220,10 @@ INSERT INTO `recommended` (`userID`, `filmID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `review`
+-- Table structure for table `reviews`
 --
 
-CREATE TABLE IF NOT EXISTS `review` (
+CREATE TABLE IF NOT EXISTS `reviews` (
   `userID` int(11) NOT NULL,
   `filmID` int(11) NOT NULL,
   `rating` int(11) NOT NULL,
@@ -231,10 +231,10 @@ CREATE TABLE IF NOT EXISTS `review` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `review`
+-- Dumping data for table `reviews`
 --
 
-INSERT INTO `review` (`userID`, `filmID`, `rating`, `review`) VALUES
+INSERT INTO `reviews` (`userID`, `filmID`, `rating`, `review`) VALUES
 (1, 1, 8, 'Cool movie. I liked it a lot :D'),
 (2, 3, 9, 'Good movie, would watch again.');
 
@@ -452,9 +452,9 @@ ALTER TABLE `recommended`
  ADD PRIMARY KEY (`userID`,`filmID`), ADD KEY `recommendedFilm` (`filmID`);
 
 --
--- Indexes for table `review`
+-- Indexes for table `reviews`
 --
-ALTER TABLE `review`
+ALTER TABLE `reviews`
  ADD PRIMARY KEY (`userID`,`filmID`), ADD KEY `userID` (`userID`), ADD KEY `filmID` (`filmID`);
 
 --
@@ -556,8 +556,8 @@ ADD CONSTRAINT `actorsPerson` FOREIGN KEY (`ID`) REFERENCES `persons` (`ID`) ON 
 -- Constraints for table `directors`
 --
 ALTER TABLE `directors`
-ADD CONSTRAINT `directorsPerson` FOREIGN KEY (`ID`) REFERENCES `persons` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `directorsFavFilm` FOREIGN KEY (`favFilm`) REFERENCES `films` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE;
+ADD CONSTRAINT `directorsFavFilm` FOREIGN KEY (`favFilm`) REFERENCES `films` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE,
+ADD CONSTRAINT `directorsPerson` FOREIGN KEY (`ID`) REFERENCES `persons` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `films`
@@ -587,9 +587,9 @@ ADD CONSTRAINT `recommendedFilm` FOREIGN KEY (`filmID`) REFERENCES `films` (`ID`
 ADD CONSTRAINT `recommendedUser` FOREIGN KEY (`userID`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `review`
+-- Constraints for table `reviews`
 --
-ALTER TABLE `review`
+ALTER TABLE `reviews`
 ADD CONSTRAINT `reviewFilmID` FOREIGN KEY (`filmID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `reviewUserID` FOREIGN KEY (`userID`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -597,8 +597,8 @@ ADD CONSTRAINT `reviewUserID` FOREIGN KEY (`userID`) REFERENCES `users` (`ID`) O
 -- Constraints for table `sequel_to`
 --
 ALTER TABLE `sequel_to`
-ADD CONSTRAINT `sequelSequel` FOREIGN KEY (`sequelID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `sequelBase` FOREIGN KEY (`baseFilmID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `sequelBase` FOREIGN KEY (`baseFilmID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `sequelSequel` FOREIGN KEY (`sequelID`) REFERENCES `films` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `similar_films`
