@@ -19,17 +19,8 @@
 			can also be accessed directly with .../filmPage.php?ID=3
 			*/
 		
-		
-			// Connect to the database
-			$servername = "localhost";		  //should be same for you
-			$username = "root";				 //same here
-			$password = "";					 //your localhost root password
-			$db = "films_db";				   //your database name
-			
-			$conn = new mysqli($servername, $username, $password, $db);
-			if($conn->connect_error){
-				die("Connection failed".$conn->connect_error);
-			}
+			$conn;
+			include 'dbConnect.php';
 			
 			$filmID = $_GET["ID"]; // This determines which film to show info for
 			
@@ -287,7 +278,9 @@
 			if($result->num_rows > 0){
 				echo "<br>Trailers:<br>";
 				while($row = $result->fetch_assoc()){
-					echo $row["name"].": ".$row["trailer"]."<br>";
+					
+					echo "<a href=\"".$row["trailer"]."\">";
+					echo $row["name"]."</a><br>";
 				}
 			}
 		}
@@ -310,8 +303,10 @@
 			if($result->num_rows > 0){
 				echo "<br>Reviews:<br>";
 				while($row = $result->fetch_assoc()){
-					echo $row["username"].": ".$row["rating"]."/10<br>";
-					echo $row["review"]."<br>";
+					
+					echo "<a href=\"userPage.php?ID=".$row["userID"]."\">";
+					echo $row["username"]."</a>: ".$row["rating"]."/10<br>";
+					echo $row["review"]."<br><br>";
 				}
 			}
 		}

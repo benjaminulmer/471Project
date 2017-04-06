@@ -19,17 +19,8 @@
 			can also be accessed directly with .../personPage.php?ID=3
 			*/
 	
-	
-			// Connect to the database
-			$servername = "localhost";		  //should be same for you
-			$username = "root";				 //same here
-			$password = "";					 //your localhost root password
-			$db = "films_db";				   //your database name
-			
-			$conn = new mysqli($servername, $username, $password, $db);
-			if($conn->connect_error){
-				die("Connection failed".$conn->connect_error);
-			}
+			$conn;
+			include 'dbConnect.php';
 			
 			$personID = $_GET["ID"]; // This determines which person to show info for
 			

@@ -19,19 +19,10 @@
 			can also be accessed directly with .../studioPage.php?ID=1
 			*/
 	
-	
-			// Connect to the database
-			$servername = "localhost";		  //should be same for you
-			$username = "root";				 //same here
-			$password = "";					 //your localhost root password
-			$db = "films_db";				   //your database name
+			$conn;
+			include 'dbConnect.php';
 			
-			$conn = new mysqli($servername, $username, $password, $db);
-			if($conn->connect_error){
-				die("Connection failed".$conn->connect_error);
-			}
-			
-			$studioID = $_GET["ID"]; // This determines which person to show info for
+			$studioID = $_GET["ID"]; // This determines which studio to show info for
 			
 			// **** Studio information **** //
 			$sql = "SELECT * 
