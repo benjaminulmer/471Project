@@ -53,7 +53,15 @@
 				echo "Date of death: ".$row["dateOfDeath"]."<br>";
 			}
 			
-			// **** Director information **** //
+			director();
+			actor();
+			awards();
+			$conn-> close();
+			
+		// Prints director info	
+		function director() {
+			global $personID, $conn;
+			
 			$sql = "SELECT * 
 			        FROM directors d
 					WHERE d.ID = ".$personID;
@@ -91,8 +99,12 @@
 					}
 				}
 			}
+		}	
 			
-			// **** Actor information **** //
+		// Prints actor info
+		function actor() {
+			global $personID, $conn;
+			
 			$sql = "SELECT * 
 			        FROM actors a
 					WHERE a.ID = ".$personID;
@@ -130,9 +142,13 @@
 						echo "<br>";
 					}
 				}
-			}		  
-
-			// **** Awards **** //
+			}
+		}	
+		
+		// Prints awards
+		function awards() {
+			global $personID, $conn;
+			
 			// Awards won
 			$sql = "SELECT f.Name AS fName, a.name AS aName, a.year, a.organization
 			        FROM awards a, won w, films f
@@ -172,9 +188,8 @@
 					echo $row["fName"]." for ".$row["organization"]." ".$row["aName"]." ".$row["year"]."<br>";
 				}
 			}
-			
-			
-			$conn-> close();
+		}
+		
 		?>
 	</body>
 </html>
