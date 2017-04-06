@@ -58,7 +58,7 @@
 		function films() {
 			global $studioID, $conn;
 			
-			$sql = "SELECT f.name as fName, f.year
+			$sql = "SELECT f.name as fName, f.year, f.ID
 			        FROM films f, worked_on w
 			        WHERE w.filmID = f.ID
 					      AND w.studioID = ".$studioID."
@@ -73,7 +73,9 @@
 			if($result->num_rows > 0){
 				echo "<br>Worked on:<br>";
 				while($row = $result->fetch_assoc()){
-					echo $row["fName"]." (".$row["year"].")<br>";
+					
+					echo "<a href=\"filmPage.php?ID=".$row["ID"]."\">";		
+					echo $row["fName"]." (".$row["year"].")</a><br>";
 				}
 			}
 		}

@@ -111,7 +111,8 @@
 			// Director name
 			if($result->num_rows > 0) {
 				$row = $result->fetch_assoc();
-				echo "<br>Director: ".$row["name"]."<br>"; 
+				echo "<br>Director: <a href=\"personPage.php?ID=".$dirID."\">";
+				echo $row["name"]."</a><br>"; 
 			}
 		}
 		
@@ -134,7 +135,8 @@
 			if($result->num_rows > 0){
 				echo "<br>Cast:<br>";
 				while($row = $result->fetch_assoc()){
-					echo $row["name"]." as ".$row["role"]."<br>";
+					echo "<a href=\"personPage.php?ID=".$row["actorID"]."\">";
+					echo $row["name"]."</a> as ".$row["role"]."<br>";
 				}
 			}	
 		}
@@ -144,7 +146,7 @@
 			global $filmID, $conn;
 			
 			// Awards won
-			$sql = "SELECT p.Name AS pName, a.name AS aName, a.year, a.organization
+			$sql = "SELECT p.ID AS pID, p.Name AS pName, a.name AS aName, a.year, a.organization
 			        FROM awards a, won w, persons p
 					WHERE w.personID = p.ID
 					      AND w.awardID = a.ID
@@ -159,12 +161,13 @@
 			if($result->num_rows > 0){
 				echo "<br>Awards won:<br>";
 				while($row = $result->fetch_assoc()){
-					echo $row["pName"]." for ".$row["organization"]." ".$row["aName"]." ".$row["year"]."<br>";
+					echo "<a href=\"personPage.php?ID=".$row["pID"]."\">";
+					echo $row["pName"]."</a> for ".$row["organization"]." ".$row["aName"]." ".$row["year"]."<br>";
 				}
 			}
 			
 			// Awards nominated
-			$sql = "SELECT p.Name AS pName, a.name AS aName, a.year, a.organization
+			$sql = "SELECT p.ID AS pID,  p.Name AS pName, a.name AS aName, a.year, a.organization
 			        FROM awards a, nominated w, persons p
 					WHERE w.personID = p.ID
 					      AND w.awardID = a.ID
@@ -179,7 +182,8 @@
 			if($result->num_rows > 0){
 				echo "<br>Awards nominated:<br>";
 				while($row = $result->fetch_assoc()){
-					echo $row["pName"]." for ".$row["organization"]." ".$row["aName"]." ".$row["year"]."<br>";
+					echo "<a href=\"personPage.php?ID=".$row["pID"]."\">";
+					echo $row["pName"]."</a> for ".$row["organization"]." ".$row["aName"]." ".$row["year"]."<br>";
 				}
 			}
 		}
@@ -202,7 +206,8 @@
 			if($result->num_rows > 0){
 				echo "<br>Studios:<br>";
 				while($row = $result->fetch_assoc()){
-					echo $row["name"]."<br>";
+					echo "<a href=\"studioPage.php?ID=".$row["studioID"]."\">";
+					echo $row["name"]."</a><br>";
 				}
 			}	
 		}
@@ -227,7 +232,8 @@
 			if($result->num_rows > 0){
 				echo "<br>Sequels:<br>";
 				while($row = $result->fetch_assoc()){
-					echo $row["name"]." (".$row["year"].")"."<br>";
+					echo "<a href=\"filmPage.php?ID=".$row["sequelID"]."\">";
+					echo $row["name"]." (".$row["year"].")"."</a><br>";
 				}
 			}	
 			
@@ -249,7 +255,17 @@
 			if($result->num_rows > 0){
 				echo "<br>Similar films:<br>";
 				while($row = $result->fetch_assoc()){
-					echo $row["name"]." (".$row["year"].")"."<br>";
+					
+					// Figure out what the ID of the other film is
+					$otherID;
+					if ($row["film1ID"] == $filmID) {
+						$otherID = $row["film2ID"];
+					}
+					else {
+						$otherID = $row["film1ID"];
+					}
+					echo "<a href=\"filmPage.php?ID=".$otherID."\">";
+					echo $row["name"]." (".$row["year"].")"."</a><br>";
 				}
 			}
 		}

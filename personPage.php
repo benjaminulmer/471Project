@@ -76,7 +76,7 @@
 				$row = $result->fetch_assoc();
 				
 				$favFilm = $row["favFilm"];
-				$sql = "SELECT * 
+				$sql = "SELECT f.name, f.ID AS fID, f.year
 				        FROM directors d, films f
 				        WHERE d.ID = ".$personID."
 				              AND f.director = d.ID
@@ -91,8 +91,11 @@
 				if($result->num_rows > 0) {
 					echo "<br>Directed:<br>";
 					while($row = $result->fetch_assoc()){
-						echo $row["name"]." (".$row["year"].")";
-						if ($row["ID"] == $favFilm) {
+						
+						echo "<a href=\"filmPage.php?ID=".$row["fID"]."\">";
+						echo $row["name"]." (".$row["year"].")"."</a>";
+						
+						if ($row["fID"] == $favFilm) {
 							echo " - favourite film directed";
 						}
 						echo "<br>";
@@ -119,7 +122,7 @@
 				$row = $result->fetch_assoc();
 				
 				$favFilm = $row["favRole"];
-				$sql = "SELECT * 
+				$sql = "SELECT f.name, f.ID AS fID, f.year, ac.role 
 				        FROM actors a, films f, acted_in ac
 				        WHERE a.ID = ".$personID."
 				              AND ac.actorID = a.ID
@@ -135,8 +138,11 @@
 				if($result->num_rows > 0) {
 					echo "<br>Stared in:<br>";
 					while($row = $result->fetch_assoc()){
-						echo $row["name"]." (".$row["year"].")"." as ".$row["role"];
-						if ($row["ID"] == $favFilm) {
+						
+						echo "<a href=\"filmPage.php?ID=".$row["fID"]."\">";
+						echo $row["name"]." (".$row["year"].")"."</a>"." as ".$row["role"];			
+						
+						if ($row["fID"] == $favFilm) {
 							echo " - favourite role";
 						}
 						echo "<br>";
@@ -150,7 +156,7 @@
 			global $personID, $conn;
 			
 			// Awards won
-			$sql = "SELECT f.Name AS fName, a.name AS aName, a.year, a.organization
+			$sql = "SELECT f.Name AS fName, a.name AS aName, a.year, a.organization, f.ID
 			        FROM awards a, won w, films f
 					WHERE w.awardID = a.ID
 						  AND w.filmID = f.ID
@@ -165,12 +171,14 @@
 			if($result->num_rows > 0){
 				echo "<br>Awards won:<br>";
 				while($row = $result->fetch_assoc()){
-					echo $row["fName"]." for ".$row["organization"]." ".$row["aName"]." ".$row["year"]."<br>";
+					
+					echo "<a href=\"filmPage.php?ID=".$row["ID"]."\">";
+					echo $row["fName"]."</a> for ".$row["organization"]." ".$row["aName"]." ".$row["year"]."<br>";
 				}
 			}
 			
 			// Awards nominated
-			$sql = "SELECT f.Name AS fName, a.name AS aName, a.year, a.organization
+			$sql = "SELECT f.Name AS fName, a.name AS aName, a.year, a.organization, f.ID
 			        FROM awards a, nominated w, films f
 					WHERE w.awardID = a.ID
 						  AND w.filmID = f.ID
@@ -185,7 +193,9 @@
 			if($result->num_rows > 0){
 				echo "<br>Awards nominated:<br>";
 				while($row = $result->fetch_assoc()){
-					echo $row["fName"]." for ".$row["organization"]." ".$row["aName"]." ".$row["year"]."<br>";
+					
+					echo "<a href=\"filmPage.php?ID=".$row["ID"]."\">";
+					echo $row["fName"]."</a> for ".$row["organization"]." ".$row["aName"]." ".$row["year"]."<br>";
 				}
 			}
 		}
