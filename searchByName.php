@@ -93,8 +93,8 @@ session_start();
 		}
 		?>
 		<font color="#3498DB"><center><h1>Search By Name</h1></center></font>
-		<center><form>
-			<input type="text" class="search" size="40" placeholder="Search..." required>
+		<center><form action="searchResult.php" method="get">
+			<input type="text" class="search" size="40" placeholder="Search..." name="search" required>
 			<input type="submit" class="button" value="Go">
 		</form></center>
 	</body>
