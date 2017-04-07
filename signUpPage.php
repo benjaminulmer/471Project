@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+<script>
+	function popUp() {
+		alert("Username Already Taken");
+		
+	}
+	
+	function accPopUP() {
+		alert("Account Created");
+	}
+
+</script>
+
 
 <html>
 	<head>
@@ -49,7 +61,57 @@
 			color: #207cca;
 		}
 	</style>
-	
+
+<?php
+	include("config.php");
+	session_start();
+	if($_SERVER["REQUEST_METHOD"] == "POST") {
+		// username and password sent from form
+		
+		$myusername = mysqli_real_escape_string($db,$_POST['username']);
+		$mypassword = mysqli_real_escape_string($db,$_POST['password']);
+		
+		$sql = "SELECT username 
+				FROM users 
+				WHERE username = '$myusername' 
+				";
+				
+		$result = mysqli_query($db,$sql);
+		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+		$active = $row['active'];
+		
+		$count = mysqli_num_rows($result);
+		
+		// if result matched $myusername and $mypassword, table row must be 1 row
+		//means the account is already made
+		if ($count == 1) {
+			
+			session_destroy();
+			$message = "you done messed up a a ron";
+			echo "<script type='text/javascript'>alert('$message'); location='signUpPage.php';</script>";
+			
+			
+
+		}
+		else {
+			
+			//insert user
+			/*
+			$query =
+			"INSERT 
+			INTO users
+			VALUES ('$myusername',''$mypassword','0')"
+			mysqli_query($db,$query)*/ 
+			
+			
+			if(session_destroy()){}
+			
+			echo "<script>accPopUP()</script>";
+			header("location: loginPage.php");
+		}
+	}
+?>	
+
 	<body>
 		<form action="homePage.php">
 			<input type="submit" class="button2" value="Home">
@@ -58,13 +120,13 @@
 			<input type="submit" class="button3" value="Log In">
 		</form>
 		<font color="#3498DB"><center><h1>Create An Account</h1></center></font>
-		<center><form>
+		<center><form action = "" method = "post">
 			<font color="#3498DB"><b>Username:</b></font>
 			<span style="display: inline-block; width: 3px;"></span>
-			<input type="text" name="usr"><br><br>
+			<input type="text" name="username"><br><br>
 			<font color="#3498DB"><b>Password:</b></font>
 			<span style="display: inline-block; width: 7px;"></span>
-			<input type="text" name="password"><br><br>
+			<input type="password" name="password"><br><br>
 			<input type="submit" class="button" name="submit" value="Create Account"><br><br>
 		</form></center>
 	</body>
