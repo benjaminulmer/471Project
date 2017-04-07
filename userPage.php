@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 
 <html>
@@ -71,28 +68,7 @@ session_start();
 	</style>	
 	
 	<body>
-		<form action="homePage.php">
-		<input type="submit" class="button2" value="Home">
-		</form>
-		<?php
-		if (isset($_SESSION['login_user'])){
-			?>
-			
-			<form action="logout.php">
-			<input type="submit" class="button4" value="Log Out: <?php echo $_SESSION['login_user']; ?>">
-			</form>
-			<?php
-		} else {
-		?>
-			<form action="loginPage.php">
-			<input type="submit" class="button2" value="Log In">
-			</form>
-			<form action="signUpPage.php">
-			<input type="submit" class="button3" value="Sign Up">
-			</form>
-			<?php
-		}
-		?>
+		<?php include 'header.php' ?>
 		<font color="#3498DB"><center><h1>User</h1></center></font>		
 
 		<?php
@@ -116,7 +92,6 @@ session_start();
 			$sql = "SELECT * 
 			        FROM users u
 			        WHERE u.ID = ".$userID;
-
 			$result = $conn->query($sql);
 			if ($result == NULL) {
 				die("Failed");
@@ -129,7 +104,6 @@ session_start();
 				echo " - Moderator";
 			}
 			echo "<br><br>";
-
 			echo "See watched films<br>";
 			echo "See recommendation queue<br>";
 			
@@ -155,7 +129,6 @@ session_start();
 			if($result->num_rows > 0){
 				echo "<br>Reviews:<br>";
 				while($row = $result->fetch_assoc()){
-
 					echo "<a href=\"filmPage.php?ID=".$row["filmID"]."\">";
 					echo $row["name"]."</a>: ".$row["rating"]."/10<br>";
 					echo $row["review"]."<br><br>";

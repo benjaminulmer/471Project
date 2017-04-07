@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 
 <html>
@@ -67,28 +64,7 @@ session_start();
 	
 	
 	<body>
-		<form action="homePage.php">
-		<input type="submit" class="button2" value="Home">
-		</form>
-		<?php
-		if (isset($_SESSION['login_user'])){
-			?>
-			
-			<form action="logout.php">
-			<input type="submit" class="button4" value="Log Out: <?php echo $_SESSION['login_user']; ?>">
-			</form>
-			<?php
-		} else {
-		?>
-			<form action="loginPage.php">
-			<input type="submit" class="button2" value="Log In">
-			</form>
-			<form action="signUpPage.php">
-			<input type="submit" class="button3" value="Sign Up">
-			</form>
-			<?php
-		}
-		?>
+		<?php include 'header.php' ?>
 	
 		<font color="#3498DB"><center><h1>Person</h1></center></font>
 		
@@ -113,7 +89,6 @@ session_start();
 			$sql = "SELECT * 
 			        FROM persons p
 			        WHERE p.ID = ".$personID;
-
 			$result = $conn->query($sql);
 			if ($result == NULL) {
 				die("Failed");
@@ -237,7 +212,6 @@ session_start();
 					WHERE w.awardID = a.ID
 						  AND w.filmID = f.ID
 						  AND w.personID = ".$personID;
-
 			$result = $conn->query($sql);
 			if ($result == NULL) {
 				die("Failed");
@@ -259,7 +233,6 @@ session_start();
 					WHERE w.awardID = a.ID
 						  AND w.filmID = f.ID
 						  AND w.personID = ".$personID;
-
 			$result = $conn->query($sql);
 			if ($result == NULL) {
 				die("Failed");
