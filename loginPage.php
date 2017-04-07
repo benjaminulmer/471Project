@@ -2,7 +2,7 @@
 
 <script>
 	function popUp() {
-		alert("Username or password entered is incorrect.");
+		alert("Username or password is incorrect.");
 	}
 </script>
 

@@ -20,20 +20,28 @@
 			*/
 	
 			$conn;
+			$flag = false;
 			include 'dbConnect.php';
 			include 'searchByName.php';
 			echo "<br><br><br>";
 			
 			$search = $_GET["search"]; // This determines which studio to show info for
 			
+			echo "<div style=margin-left:203px><b>Search results:</b></div><br>";
 			films();
 			persons();
 			studios();
+			
+			// Prints message if the user search is not in the database
+			if ($flag != true) {
+				echo "<div style=margin-left:203px>The item you searched for does not exist in the database.</div>";
+			}
+			
 			$conn-> close();
 			
 		// Prints found films
 		function films() {
-			global $search, $conn;
+			global $search, $conn, $flag;
 			
 			$sql = "SELECT *
 			        FROM films f
@@ -48,7 +56,7 @@
 			
 			// Prints out films
 			if($result->num_rows > 0){
-				echo "<div style=margin-left:203px><b>Search results:</b></div><br>";
+				//echo "<div style=margin-left:203px><b>Search results:</b></div><br>";
 				$tmp = 0;
 				while($row = $result->fetch_assoc()){
 					
@@ -60,13 +68,15 @@
 					else {
 						echo $row["name"]." (".$row["year"].")<br>";
 					}
+					$flag = true;
 				}
+				echo "<br>";
 			}
 		}
 		
 		// Prints found persons
 		function persons() {
-			global $search, $conn;
+			global $search, $conn, $flag;
 			
 			$sql = "SELECT *
 			        FROM persons p
@@ -81,25 +91,27 @@
 			
 			// Prints out people
 			if($result->num_rows > 0){
-				echo "<div style=margin-left:203px><b>Search results:</b></div><br>";
+				//echo "<div style=margin-left:203px><b>Search results:</b></div><br>";
 				$tmp = 0;
 				while($row = $result->fetch_assoc()){
 					
 					echo "<a href=\"personPage.php?ID=".$row["ID"]."\">";
-					if ($tmp == 0) {
+					if ($tmp == 0 & $flag != true) {
 						echo "<div style=margin-left:203px>".$row["name"]."<br>";
 						$tmp = 1;
 					}
 					else {
 						echo $row["name"]."<br>";
 					}
+					$flag = true;
 				}
+				echo "<br>";
 			}
 		}
 		
 		// Prints found studios
 		function studios() {
-			global $search, $conn;
+			global $search, $conn, $flag;
 			
 			$sql = "SELECT *
 			        FROM studios s
@@ -114,19 +126,21 @@
 			
 			// Prints out studios
 			if($result->num_rows > 0){
-				echo "<div style=margin-left:203px><b>Search results:</b></div><br>";
+				//echo "<div style=margin-left:203px><b>Search results:</b></div><br>";
 				$tmp = 0;
 				while($row = $result->fetch_assoc()){
 					
 					echo "<a href=\"studioPage.php?ID=".$row["ID"]."\">";
-					if ($tmp == 0) {
+					if ($tmp == 0  & $flag != true) {
 						echo "<div style=margin-left:203px>".$row["name"]."</a><br>";
 						$tmp = 1;
 					}
 					else {
 						echo $row["name"]."</a><br>";
 					}
+					$flag = true;
 				}
+				echo "<br>";
 			}
 		}
 		

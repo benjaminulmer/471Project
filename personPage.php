@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Person</title>
+		<title>Person Page</title>
 	</head>
 	
 	<style>
@@ -19,44 +19,7 @@
 			color: white;
 			font-size: 16px;
 		}
-		.button2 {
-			position: absolute;
-			top: 0;
-			left: 0;
-			padding: 6px 15px;
-			border: 2px solid #3498DB;
-			background-color: #3498DB;
-			color: #fafafa;
-		}
-		.button3 {
-			position: absolute;
-			top: 0;
-			right: 81px;
-			padding: 6px 15px;
-			color: #3498DB;
-		}
-		.button4 {
-			position: absolute;
-			top: 0;
-			right: 0;
-			padding: 6px 15px;
-			border: 2px solid #3498DB;
-			background-color: #3498DB;
-			color: #fafafa;
-		}
 		.button:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
-		.button2:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
-		.button3:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
-		.button4:hover {
 			background-color: #fafafa;
 			color: #207cca;
 		}
@@ -65,50 +28,48 @@
 	
 	<body>
 		<?php include 'header.php' ?>
-	
-		<font color="#3498DB"><center><h1>Person</h1></center></font>
-		
+		<font color="#3498DB"><center><h1>Person Details</h1></center></font>
 		<?php
 		
-			/*
-			Code to open page will look something like this:
-			
-			<form action="personPage.php" method="get">
-				<input type="submit" class="button" name="ID" value="3">
-			</form>
-			
-			can also be accessed directly with .../personPage.php?ID=3
-			*/
-	
-			$conn;
-			include 'dbConnect.php';
-			
-			$personID = $_GET["ID"]; // This determines which person to show info for
-			
-			// **** Person information **** //
-			$sql = "SELECT * 
-			        FROM persons p
-			        WHERE p.ID = ".$personID;
-			$result = $conn->query($sql);
-			if ($result == NULL) {
-				die("Failed");
-			}
-			
-			// Basic person info
-			$row = $result->fetch_assoc();
-			echo "Name: ".$row["name"]."<br>"; 
-			if ($row["dateOfBirth"] != 0) {
-				echo "Date of birth: ".$row["dateOfBirth"]."<br>";
-			}
-			if ($row["dateOfDeath"] != 0) {
-				echo "Date of death: ".$row["dateOfDeath"]."<br>";
-			}
-			
-			director();
-			actor();
-			awards();
-			$conn-> close();
-			
+		/*
+		Code to open page will look something like this:
+		
+		<form action="personPage.php" method="get">
+			<input type="submit" class="button" name="ID" value="3">
+		</form>
+		
+		can also be accessed directly with .../personPage.php?ID=3
+		*/
+
+		$conn;
+		include 'dbConnect.php';
+		
+		$personID = $_GET["ID"]; // This determines which person to show info for
+		
+		// **** Person information **** //
+		$sql = "SELECT * 
+				FROM persons p
+				WHERE p.ID = ".$personID;
+		$result = $conn->query($sql);
+		if ($result == NULL) {
+			die("Failed");
+		}
+		
+		// Basic person info
+		$row = $result->fetch_assoc();
+		echo "<b>Name: </b>".$row["name"]."<br>"; 
+		if ($row["dateOfBirth"] != 0) {
+			echo "<b>Date of birth: </b>".$row["dateOfBirth"]."<br>";
+		}
+		if ($row["dateOfDeath"] != 0) {
+			echo "<b>Date of death: </b>".$row["dateOfDeath"]."<br>";
+		}
+		
+		director();
+		actor();
+		awards();
+		$conn-> close();
+		
 		// Prints director info	
 		function director() {
 			global $personID, $conn;
@@ -140,14 +101,14 @@
 				
 				// Print all films directed
 				if($result->num_rows > 0) {
-					echo "<br>Directed:<br>";
+					echo "<br><b>Directed:</b><br>";
 					while($row = $result->fetch_assoc()){
 						
 						echo "<a href=\"filmPage.php?ID=".$row["fID"]."\">";
 						echo $row["name"]." (".$row["year"].")"."</a>";
 						
 						if ($row["fID"] == $favFilm) {
-							echo " - favourite film directed";
+							echo " - favorite film to direct";
 						}
 						echo "<br>";
 					}
@@ -187,7 +148,7 @@
 				
 				// [film] as [role]
 				if($result->num_rows > 0) {
-					echo "<br>Stared in:<br>";
+					echo "<br><b>Stared in:</b><br>";
 					while($row = $result->fetch_assoc()){
 						
 						echo "<a href=\"filmPage.php?ID=".$row["fID"]."\">";
@@ -219,7 +180,7 @@
 			
 			// Print out awards
 			if($result->num_rows > 0){
-				echo "<br>Awards won:<br>";
+				echo "<br><b>Awards won:</b><br>";
 				while($row = $result->fetch_assoc()){
 					
 					echo "<a href=\"filmPage.php?ID=".$row["ID"]."\">";
@@ -240,7 +201,7 @@
 			
 			// Print out awards
 			if($result->num_rows > 0){
-				echo "<br>Awards nominated:<br>";
+				echo "<br><b>Awards nominated:</b><br>";
 				while($row = $result->fetch_assoc()){
 					
 					echo "<a href=\"filmPage.php?ID=".$row["ID"]."\">";

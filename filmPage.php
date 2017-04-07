@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Film</title>
+		<title>Film Page</title>
 	</head>
 
 
@@ -20,44 +20,7 @@
 			color: white;
 			font-size: 16px;
 		}
-		.button2 {
-			position: absolute;
-			top: 0;
-			left: 0;
-			padding: 6px 15px;
-			border: 2px solid #3498DB;
-			background-color: #3498DB;
-			color: #fafafa;
-		}
-		.button3 {
-			position: absolute;
-			top: 0;
-			right: 81px;
-			padding: 6px 15px;
-			color: #3498DB;
-		}
-		.button4 {
-			position: absolute;
-			top: 0;
-			right: 0;
-			padding: 6px 15px;
-			border: 2px solid #3498DB;
-			background-color: #3498DB;
-			color: #fafafa;
-		}
 		.button:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
-		.button2:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
-		.button3:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
-		.button4:hover {
 			background-color: #fafafa;
 			color: #207cca;
 		}
@@ -66,57 +29,58 @@
 	
 	<body>		
 		<?php include 'header.php' ?>
-		<font color="#3498DB"><center><h1>Film</h1></center></font>
+		<font color="#3498DB"><center><h1>Film Details</h1></center></font>
 		<?php
 		
-			/*
-			Code to open page will look something like this:
-			
-			<form action="filmPage.php" method="get">
-				<input type="submit" class="button" name="ID" value="3">
-			</form>
-			
-			can also be accessed directly with .../filmPage.php?ID=3
-			*/
+		/*
+		Code to open page will look something like this:
 		
-			$conn;
-			include 'dbConnect.php';
-			
-			$filmID = $_GET["ID"]; // This determines which film to show info for
-			
-			// **** Film information **** //
-			$sql = "SELECT * 
-			        FROM films f
-			        WHERE f.ID = ".$filmID;
-			$result = $conn->query($sql);
-			if ($result == NULL) {
-				die("Failed");
-			}
-			
-			// Basic film info
-			$row = $result->fetch_assoc();
-			echo "Name: ".$row["name"]."<br>"; 
-			echo "Year: ".$row["year"]."<br>";
-			echo "Runtime: ".$row["runtime"]." minutes<br>";
-			echo "Budget: $".$row["budget"]."<br>";
-			echo "Box Office: $".$row["boxOffice"]."<br>";
-			
-			// Store description and dirID for later
-			$description = "Description: ".$row["description"]."<br>";
-			$dirID = $row["director"];
-			
-			genres();
-			director();
-			echo "<br>".$description;
-			cast();
-			awards();
-			studios();
-			sequelsAndSimilar();
-			trailers();
-			reviews();
-			
-			$conn-> close();
-			
+		<form action="filmPage.php" method="get">
+			<input type="submit" class="button" name="ID" value="3">
+		</form>
+		
+		can also be accessed directly with .../filmPage.php?ID=3
+		*/
+	
+		$conn;
+		include 'dbConnect.php';
+		
+		$filmID = $_GET["ID"]; // This determines which film to show info for
+		
+		// **** Film information **** //
+		$sql = "SELECT * 
+				FROM films f
+				WHERE f.ID = ".$filmID;
+		$result = $conn->query($sql);
+		if ($result == NULL) {
+			die("Failed");
+		}
+		
+		// Basic film info
+		$row = $result->fetch_assoc();
+		echo "<b>Name: </b>".$row["name"]."<br>"; 
+		echo "<b>Year: </b>".$row["year"]."<br>";
+		echo "<b>Runtime: </b>".$row["runtime"]." minutes<br>";
+		
+		// Store description and dirID for later
+		$description = "<b>Description:</b><br>".$row["description"]."<br>";
+		$dirID = $row["director"];
+		
+		genres();
+		echo "<br><br>".$description;
+		director();
+		cast();
+		awards();
+		echo "<br><b>Box Office:</b><br>";
+		echo "<u>Budget:</u> $".$row["budget"]."<br>";
+		echo "<u>Gross:</u> $".$row["boxOffice"]."<br>";
+		studios();
+		trailers();
+		sequelsAndSimilar();
+		reviews();
+		
+		$conn-> close();
+		
 		// Prints genres	
 		function genres() {
 			global $filmID, $conn;
@@ -132,7 +96,7 @@
 			
 			// Pretty print each genre
 			if($result->num_rows > 0){
-				echo "Genres: ";
+				echo "<b>Genre: </b>";
 				$i = 0;
 				while($row = $result->fetch_assoc()){
 					if ($i != 0) {
@@ -161,7 +125,7 @@
 			// Director name
 			if($result->num_rows > 0) {
 				$row = $result->fetch_assoc();
-				echo "<br>Director: <a href=\"personPage.php?ID=".$dirID."\">";
+				echo "<br><b>Directors:</b> <a href=\"personPage.php?ID=".$dirID."\">";
 				echo $row["name"]."</a><br>"; 
 			}
 		}
@@ -183,7 +147,7 @@
 			
 			// [person] as [role]
 			if($result->num_rows > 0){
-				echo "<br>Cast:<br>";
+				echo "<br><b>Stars:</b><br>";
 				while($row = $result->fetch_assoc()){
 					echo "<a href=\"personPage.php?ID=".$row["actorID"]."\">";
 					echo $row["name"]."</a> as ".$row["role"]."<br>";
@@ -208,7 +172,7 @@
 			
 			// Print out awards
 			if($result->num_rows > 0){
-				echo "<br>Awards won:<br>";
+				echo "<br><b>Awards won:</b><br>";
 				while($row = $result->fetch_assoc()){
 					echo "<a href=\"personPage.php?ID=".$row["pID"]."\">";
 					echo $row["pName"]."</a> for ".$row["organization"]." ".$row["aName"]." ".$row["year"]."<br>";
@@ -228,7 +192,7 @@
 			
 			// Print out awards
 			if($result->num_rows > 0){
-				echo "<br>Awards nominated:<br>";
+				echo "<br><b>Awards nominated:</b><br>";
 				while($row = $result->fetch_assoc()){
 					echo "<a href=\"personPage.php?ID=".$row["pID"]."\">";
 					echo $row["pName"]."</a> for ".$row["organization"]." ".$row["aName"]." ".$row["year"]."<br>";
@@ -252,12 +216,36 @@
 			
 			// Print out studios
 			if($result->num_rows > 0){
-				echo "<br>Studios:<br>";
+				echo "<br><b>Studios:</b></br>";
 				while($row = $result->fetch_assoc()){
 					echo "<a href=\"studioPage.php?ID=".$row["studioID"]."\">";
 					echo $row["name"]."</a><br>";
 				}
 			}	
+		}
+		
+		// Prints trailers
+		function trailers() {
+			global $filmID, $conn;
+			
+			$sql = "SELECT * 
+			        FROM trailers t
+					WHERE t.filmID = ".$filmID;
+			
+			$result = $conn->query($sql);
+			if ($result == NULL) {
+				die("Failed");
+			}
+			
+			// Print out trailers
+			if($result->num_rows > 0){
+				echo "<br><b>Trailers:</b></br>";
+				while($row = $result->fetch_assoc()){
+					
+					echo "<a href=\"".$row["trailer"]."\">";
+					echo $row["name"]."</a><br>";
+				}
+			}
 		}
 		
 		// Prints sequels and similar films
@@ -278,7 +266,7 @@
 			
 			// Print out sequels
 			if($result->num_rows > 0){
-				echo "<br>Sequels:<br>";
+				echo "<br><b>Sequels:</b><br>";
 				while($row = $result->fetch_assoc()){
 					echo "<a href=\"filmPage.php?ID=".$row["sequelID"]."\">";
 					echo $row["name"]." (".$row["year"].")"."</a><br>";
@@ -301,7 +289,7 @@
 			
 			// Print out similar films
 			if($result->num_rows > 0){
-				echo "<br>Similar films:<br>";
+				echo "<br><b>Similar films:</b><br>";
 				while($row = $result->fetch_assoc()){
 					
 					// Figure out what the ID of the other film is
@@ -314,30 +302,6 @@
 					}
 					echo "<a href=\"filmPage.php?ID=".$otherID."\">";
 					echo $row["name"]." (".$row["year"].")"."</a><br>";
-				}
-			}
-		}
-		
-		// Prints trailers
-		function trailers() {
-			global $filmID, $conn;
-			
-			$sql = "SELECT * 
-			        FROM trailers t
-					WHERE t.filmID = ".$filmID;
-			
-			$result = $conn->query($sql);
-			if ($result == NULL) {
-				die("Failed");
-			}
-			
-			// Print out trailers
-			if($result->num_rows > 0){
-				echo "<br>Trailers:<br>";
-				while($row = $result->fetch_assoc()){
-					
-					echo "<a href=\"".$row["trailer"]."\">";
-					echo $row["name"]."</a><br>";
 				}
 			}
 		}
@@ -358,7 +322,7 @@
 			
 			// Print out reviews
 			if($result->num_rows > 0){
-				echo "<br>Reviews:<br>";
+				echo "<br><b>Reviews:</b><br>";
 				while($row = $result->fetch_assoc()){
 					
 					echo "<a href=\"userPage.php?ID=".$row["userID"]."\">";

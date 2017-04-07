@@ -30,16 +30,16 @@
 		<?php include 'header.php' ?>
 		<font color="#3498DB"><center><h1>Search By Filter</h1></center></font>
 		<center>
-		<form>
+		<form action="chooseActor.php">
 			<input type="submit" class="button" value="Actors">
 		</form>
-		<form>
+		<form action="chooseDirector.php">
 			<input type="submit" class="button" value="Directors">
 		</form>
-		<form>
+		<form action="chooseGenre.php">
 			<input type="submit" class="button" value="Genres">
 		</form>
-		<form>
+		<form action="chooseStudio.php">
 			<input type="submit" class="button" value="Studios">
 		</form><br><br>
 		<form action="">
@@ -51,16 +51,15 @@
 			</select>
 			<span style="display: inline-block; width: 3px;"></span>
 			release date<br>
-			<div style="margin-left:52px;"><input type="checkbox" name="release date">Sort by number of Oscars
+			<div style="margin-left:54px;"><input type="checkbox" name="release date">Sort by number of awards
 			<span style="display: inline-block; width: 3px;"></span>
 			<select>
 				<option value="action">won</option>
 				<option value="action">nominated</option>
 			</select><br><br>
-		</form>
-		</center>
-		<center>
-			<input style="width:96px" type="submit" class="button" name="submit" value="Filter">
-		</center>
+		</form></center>
+		<center><form>
+			<input style="width:96px" type="submit" class="button" value="Filter">
+		</form></center>
 	</body>
 </html>
