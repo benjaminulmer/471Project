@@ -39,6 +39,15 @@ session_start();
 			background-color: #3498DB;
 			color: #fafafa;
 		}
+		.button4 {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			padding: 6px 15px;
+			border: 2px solid #3498DB;
+			background-color: #3498DB;
+			color: #fafafa;
+		}
 		.button:hover {
 			background-color: #fafafa;
 			color: #207cca;
@@ -51,6 +60,13 @@ session_start();
 			background-color: #fafafa;
 			color: #207cca;
 		}
+		.button4:hover {
+			background-color: #fafafa;
+			color: #207cca;
+		}
+		
+		
+		
 	</style>
 	
 	<body>
@@ -88,7 +104,16 @@ session_start();
 			<input type="submit" class="button" value="Search By Filter">
 			</form>
 		</center>
-
+		<?php
+		if (isset($_SESSION['is_mod']) And ($_SESSION['is_mod'] == 1)){
+			?>
+			
+			<form action="modPage.php">
+			<input type="submit" class="button4" value="Super Secret modPage">
+			</form>
+			<?php
+		} 
+		?>
 		
 	</body>
 </html>

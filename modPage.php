@@ -24,7 +24,6 @@
 			background-color: #fafafa;
 			color: #207cca;
 		}
-
 	</style>
 	
 	<body>

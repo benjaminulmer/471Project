@@ -9,7 +9,6 @@
 <?php
 	include("config.php");
 	session_start();
-
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 		// username and password sent from form
 		
@@ -32,6 +31,15 @@
 		if ($count == 1) {
 			
 			$_SESSION['login_user'] = $myusername;
+			
+			$sql = "SELECT moderator
+				FROM users
+				WHERE username ='$myusername'
+					";
+			$result = mysqli_query($db,$sql);
+			$row = $result->fetch_assoc();
+		 
+		$_SESSION['is_mod'] = $row["moderator"];
 			
 			header("location: homePage.php");
 		}
