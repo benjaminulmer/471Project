@@ -39,8 +39,7 @@
 		
 		<center>
 		<form action="searchByFilter.php"><input type="submit" class="button" value="Ok"></form>
-		<span style="display: inline-block; width: 1px;"></span>
-		<form><input type="submit" class="button" value="Clear"></form>
+		<form><input type="button" class="button" value="Clear"></form>
 		</center>
 	</body>
 </html>

@@ -1,16 +1,4 @@
 <!DOCTYPE html>
-<script>
-	function popUp() {
-		alert("Username Already Taken");
-		
-	}
-	
-	function accPopUP() {
-		alert("Account Created");
-	}
-
-</script>
-
 
 <html>
 	<head>
@@ -83,15 +71,14 @@
 		$count = mysqli_num_rows($result);
 		
 		// if result matched $myusername and $mypassword, table row must be 1 row
-		//means the account is already made
+		// means the account is already made
 		if ($count == 1) {
 			
 			session_destroy();
-			$message = "you done messed up a a ron";
+			$message = "Username already taken.";
 			echo "<script type='text/javascript'>alert('$message'); location='signUpPage.php';</script>";
 			
 			
-
 		}
 		else {
 			
@@ -101,12 +88,10 @@
 			"INSERT 
 			INTO users
 			VALUES ('$myusername',''$mypassword','0')"
-			mysqli_query($db,$query)*/ 
+			mysqli_query($db,$query)*/
 			
+			if (session_destroy()) {}
 			
-			if(session_destroy()){}
-			
-			echo "<script>accPopUP()</script>";
 			header("location: loginPage.php");
 		}
 	}
