@@ -27,14 +27,14 @@
 			
 			$search = $_GET["search"]; // This determines which studio to show info for
 			
-			echo "<div style=margin-left:203px><b>Search results:</b></div><br>";
+			echo "<center><b>Search results:</b></center><br>";
 			films();
 			persons();
 			studios();
 			
 			// Prints message if the user search is not in the database
 			if ($flag != true) {
-				echo "<div style=margin-left:203px>The item you searched for does not exist in the database.</div>";
+				echo "<center>The item you searched for does not exist in the database.</center>";
 			}
 			
 			$conn-> close();
@@ -56,18 +56,11 @@
 			
 			// Prints out films
 			if($result->num_rows > 0){
-				//echo "<div style=margin-left:203px><b>Search results:</b></div><br>";
-				$tmp = 0;
 				while($row = $result->fetch_assoc()){
 					
 					echo "<a href=\"filmPage.php?ID=".$row["ID"]."\">";
-					if ($tmp == 0) {
-						echo "<div style=margin-left:203px>".$row["name"]." (".$row["year"].")<br>";
-						$tmp = 1;
-					}
-					else {
-						echo $row["name"]." (".$row["year"].")<br>";
-					}
+					echo "<center>".$row["name"]." (".$row["year"].")</center>";
+					
 					$flag = true;
 				}
 				echo "<br>";
@@ -91,18 +84,11 @@
 			
 			// Prints out people
 			if($result->num_rows > 0){
-				//echo "<div style=margin-left:203px><b>Search results:</b></div><br>";
-				$tmp = 0;
 				while($row = $result->fetch_assoc()){
 					
 					echo "<a href=\"personPage.php?ID=".$row["ID"]."\">";
-					if ($tmp == 0 & $flag != true) {
-						echo "<div style=margin-left:203px>".$row["name"]."<br>";
-						$tmp = 1;
-					}
-					else {
-						echo $row["name"]."<br>";
-					}
+					echo "<center>".$row["name"]."</center>";
+					
 					$flag = true;
 				}
 				echo "<br>";
@@ -126,18 +112,11 @@
 			
 			// Prints out studios
 			if($result->num_rows > 0){
-				//echo "<div style=margin-left:203px><b>Search results:</b></div><br>";
-				$tmp = 0;
 				while($row = $result->fetch_assoc()){
 					
 					echo "<a href=\"studioPage.php?ID=".$row["ID"]."\">";
-					if ($tmp == 0  & $flag != true) {
-						echo "<div style=margin-left:203px>".$row["name"]."</a><br>";
-						$tmp = 1;
-					}
-					else {
-						echo $row["name"]."</a><br>";
-					}
+					echo "<center>".$row["name"]."</center>";
+					
 					$flag = true;
 				}
 				echo "<br>";

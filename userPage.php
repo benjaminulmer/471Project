@@ -63,7 +63,7 @@
 		$row = $result->fetch_assoc();
 		echo "<b>Name: </b>".$row["username"]; 
 		if ($row["moderator"]) {
-			echo " - Moderator";
+			echo "*";	// Includes star if user is a moderator
 		}
 		echo "<br><br>";
 		echo "Films ".$row["username"]." has seen<br>";

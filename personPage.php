@@ -105,10 +105,10 @@
 					while($row = $result->fetch_assoc()){
 						
 						echo "<a href=\"filmPage.php?ID=".$row["fID"]."\">";
-						echo $row["name"]." (".$row["year"].")"."</a>";
+						echo $row["name"]."</a>";
 						
 						if ($row["fID"] == $favFilm) {
-							echo " - favorite film to direct";
+							echo " - <i>favorite directorial</i>";
 						}
 						echo "<br>";
 					}
@@ -152,10 +152,10 @@
 					while($row = $result->fetch_assoc()){
 						
 						echo "<a href=\"filmPage.php?ID=".$row["fID"]."\">";
-						echo $row["name"]." (".$row["year"].")"."</a>"." as ".$row["role"];			
+						echo $row["name"]."</a>"." as ".$row["role"];			
 						
 						if ($row["fID"] == $favFilm) {
-							echo " - favourite role";
+							echo " - <i>favourite role</i>";
 						}
 						echo "<br>";
 					}
