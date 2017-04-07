@@ -63,7 +63,7 @@
 	
 	<body>
 		<form action="homePage.php">
-			<input type="submit" class="button2" value="Back">
+			<input type="submit" class="button2" value="Home">
 		</form>
 		<form action="loginPage.php">
 			<input type="submit" class="button4" value="Log In">

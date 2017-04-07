@@ -54,7 +54,9 @@ session_start();
 	</style>
 	
 	<body>
-		
+		<form action="homePage.php">
+		<input type="submit" class="button2" value="Home">
+		</form>
 		<?php
 		if (isset($_SESSION['login_user'])){
 			?>
