@@ -1,37 +1,46 @@
 <!DOCTYPE html>
+
+<script>
+	function popUp() {
+		alert("Username or password entered is incorrect.");
+	}
+</script>
+
 <?php
-   include("config.php");
-   session_start();
-   
-   if($_SERVER["REQUEST_METHOD"] == "POST") {
-      // username and password sent from form 
-      
-      $myusername = mysqli_real_escape_string($db,$_POST['username']);
-      $mypassword = mysqli_real_escape_string($db,$_POST['password']); 
-      
-      $sql = "SELECT username 
-		      FROM users 
-			  WHERE username = '$myusername' 
-			        AND passwordHash = '$mypassword'";
-					
-      $result = mysqli_query($db,$sql);
-      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-      $active = $row['active'];
-      
-      $count = mysqli_num_rows($result);
-      
-      // If result matched $myusername and $mypassword, table row must be 1 row
+	include("config.php");
+	session_start();
+
+	if($_SERVER["REQUEST_METHOD"] == "POST") {
+		// username and password sent from form
 		
-      if($count == 1) {
-         
-         $_SESSION['login_user'] = $myusername;
-         
-         header("location: homePage.php");
-      }else {
-         echo  "Your Login Name or Password is invalid";
-      }
-   }
+		$myusername = mysqli_real_escape_string($db,$_POST['username']);
+		$mypassword = mysqli_real_escape_string($db,$_POST['password']);
+		
+		$sql = "SELECT username 
+				FROM users 
+				WHERE username = '$myusername' 
+				AND passwordHash = '$mypassword'";
+				
+		$result = mysqli_query($db,$sql);
+		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+		$active = $row['active'];
+		
+		$count = mysqli_num_rows($result);
+		
+		// if result matched $myusername and $mypassword, table row must be 1 row
+		
+		if ($count == 1) {
+			
+			$_SESSION['login_user'] = $myusername;
+			
+			header("location: homePage.php");
+		}
+		else {
+			echo '<script>popUp()</script>';
+		}
+	}
 ?>
+
 <html>
 	<head>
 		<title>Login Page</title>
@@ -65,13 +74,6 @@
 		.button3 {
 			position: absolute;
 			top: 0;
-			right: 81px;
-			padding: 6px 15px;
-			color: #3498DB;
-		}
-		.button4 {
-			position: absolute;
-			top: 0;
 			right: 0;
 			padding: 6px 15px;
 			border: 2px solid #3498DB;
@@ -90,19 +92,15 @@
 			background-color: #fafafa;
 			color: #207cca;
 		}
-		.button4:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
 	</style>
 	
 	<body>
 		<form action="homePage.php">
-			<input type="submit" class="button2" value="Back">
+			<input type="submit" class="button2" value="Home">
 		</form>
 
 		<form action="signUpPage.php">
-			<input type="submit" class="button4" value="Sign Up">
+			<input type="submit" class="button3" value="Sign Up">
 		</form>
 		<font color="#3498DB"><center><h1>Sign In</h1></center></font>
 		<center><form action = "" method = "post">

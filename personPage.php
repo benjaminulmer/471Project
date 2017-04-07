@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 
 <html>
@@ -64,7 +67,28 @@
 	
 	
 	<body>
-		<?php include 'header.php' ?>
+		<form action="homePage.php">
+		<input type="submit" class="button2" value="Home">
+		</form>
+		<?php
+		if (isset($_SESSION['login_user'])){
+			?>
+			
+			<form action="logout.php">
+			<input type="submit" class="button4" value="Log Out: <?php echo $_SESSION['login_user']; ?>">
+			</form>
+			<?php
+		} else {
+		?>
+			<form action="loginPage.php">
+			<input type="submit" class="button2" value="Log In">
+			</form>
+			<form action="signUpPage.php">
+			<input type="submit" class="button3" value="Sign Up">
+			</form>
+			<?php
+		}
+		?>
 	
 		<font color="#3498DB"><center><h1>Person</h1></center></font>
 		
