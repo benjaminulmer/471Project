@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Mod Page</title>
+		<title>Moderator Page</title>
 	</head>
 	
 	<style>
@@ -29,8 +29,8 @@
 	<body>
 		<?php include 'header.php' ?>
 		
-		<font color="#3498DB"><center><h1>Welcome to the Super Secret Moderator Page</h1></center></font>
-
-		
+		<font color="#3498DB"><center><h1>Secret Page</h1></center></font>
+		<center><b>Nothing to see here.</b></center>
+		<center><b>Move along.</b></center>
 	</body>
 </html>

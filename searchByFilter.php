@@ -20,44 +20,7 @@
 			background-color: #3498DB;
 			color: #fafafa;
 		}
-		.button2 {
-			position: absolute;
-			top: 0;
-			left: 0;
-			padding: 6px 15px;
-			border: 2px solid #3498DB;
-			background-color: #3498DB;
-			color: #fafafa;
-		}
-		.button3 {
-			position: absolute;
-			top: 0;
-			right: 81px;
-			padding: 6px 15px;
-			color: #3498DB;
-		}
-		.button4 {
-			position: absolute;
-			top: 0;
-			right: 0;
-			padding: 6px 15px;
-			border: 2px solid #3498DB;
-			background-color: #3498DB;
-			color: #fafafa;
-		}
 		.button:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
-		.button2:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
-		.button3:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
-		.button4:hover {
 			background-color: #fafafa;
 			color: #207cca;
 		}
@@ -80,7 +43,7 @@
 			<input type="submit" class="button" value="Studios">
 		</form><br><br>
 		<form action="">
-			<input type="checkbox" name="release date">Sort by
+			<div style="margin-left:-125px;"><input type="checkbox" name="release date">Sort by
 			<span style="display: inline-block; width: 3px;"></span>
 			<select>
 				<option value="action">newest</option>
@@ -88,13 +51,15 @@
 			</select>
 			<span style="display: inline-block; width: 3px;"></span>
 			release date<br>
-			<input type="checkbox" name="release date">Sort by number of Oscars
+			<div style="margin-left:52px;"><input type="checkbox" name="release date">Sort by number of Oscars
 			<span style="display: inline-block; width: 3px;"></span>
 			<select>
 				<option value="action">won</option>
 				<option value="action">nominated</option>
 			</select><br><br>
-			<input type="submit" class="button" name="submit" value="Filter">
+		</center>
+		<center>
+			<input style="width:96px" type="submit" class="button" name="submit" value="Filter">
 		</form>
 		</center>
 	</body>

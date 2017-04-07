@@ -109,7 +109,7 @@ session_start();
 			?>
 			
 			<form action="modPage.php">
-			<input type="submit" class="button4" value="Super Secret modPage">
+			<input type="submit" class="button4" value="It's a secret!">
 			</form>
 			<?php
 		} 
