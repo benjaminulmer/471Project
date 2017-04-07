@@ -5,6 +5,7 @@
 		<meta charset="UTF-8">
 		<title>Search Result</title>
 	</head>
+	
 	<body>
 		<?php
 		
@@ -21,7 +22,7 @@
 			$conn;
 			include 'dbConnect.php';
 			include 'searchByName.php';
-			echo "<br><br><br><br>";
+			echo "<br><br><br>";
 			
 			$search = $_GET["search"]; // This determines which studio to show info for
 			
@@ -47,11 +48,18 @@
 			
 			// Prints out films
 			if($result->num_rows > 0){
-				echo "<br>Films:<br>";
+				echo "<div style=margin-left:203px><b>Search results:</b></div><br>";
+				$tmp = 0;
 				while($row = $result->fetch_assoc()){
 					
-					echo "<a href=\"filmPage.php?ID=".$row["ID"]."\">";		
-					echo $row["name"]." (".$row["year"].")</a><br>";
+					echo "<a href=\"filmPage.php?ID=".$row["ID"]."\">";
+					if ($tmp == 0) {
+						echo "<div style=margin-left:203px>".$row["name"]." (".$row["year"].")<br>";
+						$tmp = 1;
+					}
+					else {
+						echo $row["name"]." (".$row["year"].")<br>";
+					}
 				}
 			}
 		}
@@ -71,13 +79,20 @@
 				die("Failed");
 			}
 			
-			// Prints out films
+			// Prints out people
 			if($result->num_rows > 0){
-				echo "<br>People:<br>";
+				echo "<div style=margin-left:203px><b>Search results:</b></div><br>";
+				$tmp = 0;
 				while($row = $result->fetch_assoc()){
 					
-					echo "<a href=\"personPage.php?ID=".$row["ID"]."\">";		
-					echo $row["name"]."</a><br>";
+					echo "<a href=\"personPage.php?ID=".$row["ID"]."\">";
+					if ($tmp == 0) {
+						echo "<div style=margin-left:203px>".$row["name"]."<br>";
+						$tmp = 1;
+					}
+					else {
+						echo $row["name"]."<br>";
+					}
 				}
 			}
 		}
@@ -97,13 +112,20 @@
 				die("Failed");
 			}
 			
-			// Prints out films
+			// Prints out studios
 			if($result->num_rows > 0){
-				echo "<br>Studios:<br>";
+				echo "<div style=margin-left:203px><b>Search results:</b></div><br>";
+				$tmp = 0;
 				while($row = $result->fetch_assoc()){
 					
-					echo "<a href=\"studioPage.php?ID=".$row["ID"]."\">";		
-					echo $row["name"]."</a><br>";
+					echo "<a href=\"studioPage.php?ID=".$row["ID"]."\">";
+					if ($tmp == 0) {
+						echo "<div style=margin-left:203px>".$row["name"]."</a><br>";
+						$tmp = 1;
+					}
+					else {
+						echo $row["name"]."</a><br>";
+					}
 				}
 			}
 		}

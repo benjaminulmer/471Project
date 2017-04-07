@@ -33,19 +33,10 @@
 			
 			$_SESSION['login_user'] = $myusername;
 			
-			$sql = "SELECT moderator
-				FROM users
-				WHERE username ='$myusername'
-					";
-			$result = mysqli_query($db,$sql);
-			$row = $result->fetch_assoc();
-		 
-		$_SESSION['is_mod'] = $row["moderator"];
-			
 			header("location: homePage.php");
 		}
 		else {
-			echo '<script>popUp()</script>';
+			echo "<script>popUp()</script>";
 		}
 	}
 ?>
