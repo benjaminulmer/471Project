@@ -23,44 +23,7 @@
 			background-color: #3498DB;
 			color: #fafafa;
 		}
-		.button2 {
-			position: absolute;
-			top: 0;
-			left: 0;
-			padding: 6px 15px;
-			border: 2px solid #3498DB;
-			background-color: #3498DB;
-			color: #fafafa;
-		}
-		.button3 {
-			position: absolute;
-			top: 0;
-			right: 81px;
-			padding: 6px 15px;
-			color: #3498DB;
-		}
-		.button4 {
-			position: absolute;
-			top: 0;
-			right: 0;
-			padding: 6px 15px;
-			border: 2px solid #3498DB;
-			background-color: #3498DB;
-			color: #fafafa;
-		}
 		.button:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
-		.button2:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
-		.button3:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
-		.button4:hover {
 			background-color: #fafafa;
 			color: #207cca;
 		}

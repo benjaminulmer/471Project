@@ -57,10 +57,10 @@
 				<option value="action">won</option>
 				<option value="action">nominated</option>
 			</select><br><br>
+		</form>
 		</center>
 		<center>
 			<input style="width:96px" type="submit" class="button" name="submit" value="Filter">
-		</form>
 		</center>
 	</body>
 </html>
