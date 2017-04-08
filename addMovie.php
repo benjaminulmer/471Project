@@ -144,7 +144,8 @@
 		} 
 		
 		$sql = "SELECT d.ID, name FROM directors AS d, persons AS p
-		WHERE d.ID = p.ID";
+		WHERE d.ID = p.ID
+		GROUP BY ID";
 		$result = $conn->query($sql);
 		
 		if ($result->num_rows > 0) {
