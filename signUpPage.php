@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 
 <html>
@@ -51,8 +54,16 @@
 	</style>
 
 <?php
-	include("config.php");
-	session_start();
+	define('DB_SERVER', 'localhost');
+	define('DB_USERNAME', 'root');
+	define('DB_PASSWORD', '');
+	define('DB_DATABASE', 'films_db');
+	$db = new mysqli(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+	
+	if ($db->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+	} 
+	
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 		// username and password sent from form
 		
@@ -64,7 +75,7 @@
 				WHERE username = '$myusername' 
 				";
 				
-		$result = mysqli_query($db,$sql);
+		$result = $db->query($sql);
 		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 		$active = $row['active'];
 		
@@ -76,6 +87,7 @@
 			
 			session_destroy();
 			$message = "Username already taken.";
+			$db->close();
 			echo "<script type='text/javascript'>alert('$message'); location='signUpPage.php';</script>";
 			
 			
@@ -90,9 +102,17 @@
 			VALUES ('$myusername',''$mypassword','0')"
 			mysqli_query($db,$query)*/
 			
-			if (session_destroy()) {}
+
 			
-			header("location: loginPage.php");
+			
+			$query = "INSERT INTO users (username, passwordHash, moderator)
+			VALUES('$myusername', '$mypassword', '0')";
+			
+			
+			mysqli_query($db, $query);
+			$accmessage = "Account Created";
+			$db->close();
+			echo "<script type='text/javascript'>alert('$accmessage'); location='loginPage.php';</script>";
 		}
 	}
 ?>	
