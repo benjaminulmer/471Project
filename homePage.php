@@ -58,7 +58,7 @@
 			?>
 			
 			<form action="modPage.php">
-			<input type="submit" class="button5" value="It's a secret!">
+			<input type="submit" class="button5" value="Moderator Page">
 			</form>
 			<?php
 		} 
