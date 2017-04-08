@@ -38,15 +38,61 @@
 			color: #207cca;
 		}
 	</style>
+
+<?php
+	define('DB_SERVER', 'localhost');
+	define('DB_USERNAME', 'root');
+	define('DB_PASSWORD', '');
+	define('DB_DATABASE', 'films_db');
+	$db = new mysqli(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
 	
+	if ($db->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+	} 
+	
+	if($_SERVER["REQUEST_METHOD"] == "POST") {
+		// username and password sent from form
+		
+		$personname = mysqli_real_escape_string($db,$_POST['name']);
+		$dateOfBirth = mysqli_real_escape_string($db,$_POST['dateOfBirth']);
+		$dateOfDeath = mysqli_real_escape_string($db,$_POST['dateOfDeath']);
+			
+	
+		$query = "INSERT INTO persons (name, dateOfBirth, dateOfDeath)
+		VALUES('$personname', '$dateOfBirth', '$dateOfDeath')";
+			
+			
+		$db->query($query);
+		$accmessage = "Person Added";
+		$db->close();
+		echo "<script type='text/javascript'>alert('$accmessage'); location='modPage.php';</script>";
+		
+	}
+?>	
+		
 	<body>
 		<?php include 'header.php' ?>
 		
 		<font color="#3498DB"><center><h1>Add Person</h1></center></font>
-		<center>
+		<center><form action = "" method = "post">
+			
+			<font color="#3498DB"><b>Person Name:</b></font>
+			<span style="display: inline-block; width: 3px;"></span>
+			<input type="text" name="name"><br><br>
+			
+			<font color="#3498DB"><b>Date of Birth:</b></font>
+			<span style="display: inline-block; width: 7px;"></span>
+			<input type="date" name="dateOfBirth"><br><br>
 
-		</center>
+			<font color="#3498DB"><b>Date of Death: </b></font>
+			<span style="display: inline-block; width: 7px;"></span>
+			<input type="date" name="dateOfDeath"><br><br>
 
+			
+			<input type="submit" class="button" name="submit" value="Add Person"><br><br>
+		</form></center>
 		
+		
+			
 	</body>
 </html>
