@@ -355,6 +355,32 @@
 					echo $row["review"]."<br><br>";
 				}
 			}
+			
+			if (isset($_SESSION['user_id'])) {
+			$userID = $_SESSION['user_id'];
+			
+			$sql = "SELECT *
+					FROM reviews r
+					WHERE r.userID = ".$userID."
+					      AND r.filmID = ".$filmID;
+			
+			$result = $conn->query($sql);
+			if ($result == NULL) {
+				die("Failed");
+			}
+			if($result->num_rows == 0) {
+				?>
+				<form action = "review.php" method = "GET">
+				<input type="hidden" name = "filmID" value = "<?php echo $filmID; ?>">
+				<input type="hidden" name = "userID" value = "<?php echo $userID; ?>">
+				<br>Rating (out of 10)
+				<input type="number" name="rating"><br>	
+				<TEXTAREA name="review"  ROWS=5 COLS=65 ></TEXTAREA><br>
+				<input type="submit" class="button" name="submit" value="Post Review"><br><br>
+				<?php
+			}
+		}
+			
 		}
 		
 		function editButton(){
