@@ -84,7 +84,10 @@
 		<?php
 		// Store description and dirID for later
 		$description = "<b>Description:</b><br>".$row["description"]."<br>";
-		$dirID = $row["director"];
+		
+		
+				$dirID = $row["director"];
+			
 		
 		genres();
 		echo "<br><br>".$description;
@@ -99,8 +102,13 @@
 		
 		<?php
 		
+		if (isset($dirID))  {
+				director();
+			}
+		else{
+			setdirector();
+		}
 		
-		director();
 		cast();
 		awards();
 		echo "<br><b>Box Office:</b><br>";
@@ -142,7 +150,7 @@
 			
 		// Prints director
 		function director() {
-			global $dirID, $conn;
+			global $filmID, $dirID, $conn;
 			
 			$sql = "SELECT * 
 					FROM directors d, persons p
@@ -158,8 +166,62 @@
 			if($result->num_rows > 0) {
 				$row = $result->fetch_assoc();
 				echo "<br><b>Directors:</b> <a href=\"personPage.php?ID=".$dirID."\">";
-				echo $row["name"]."</a><br>"; 
+				echo $row["name"]."</a><br>";
+				//Delete
+				?>
+				<form action = "removeFilmDirector.php" method = "GET">
+				<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">
+				<input type="hidden" name = "dirID" value = "<?php echo $dirID; ?>">
+				<input type="submit" class="button" name="submit" value="Delete Director"><br><br>
+				</form>
+				<?php
 			}
+			else{
+				
+			}
+		}
+		
+		function setdirector() {
+			global $filmID, $conn;
+				?>
+				<form action = "addFilmDirector.php" method = "GET">
+				<font color="#3498DB"><b>Add Director(Use ID):</b></font>
+				<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">
+				<input type="number" name="dirID"><br>				
+				<input type="submit" class="button" name="submit" value="Add Director"><br><br>
+				</form>
+				Directors
+				<?php
+		
+				
+				
+				
+				// Check connection
+				if ($conn->connect_error) {
+					die("Connection failed: " . $conn->connect_error);
+				} 
+				
+				$sql = "SELECT d.ID, name FROM directors AS d, persons AS p
+				WHERE d.ID = p.ID
+				GROUP BY ID";
+				$result = $conn->query($sql);
+				
+				if ($result->num_rows > 0) {
+					echo "<table><tr><th>ID</th><th>Name</th></tr>";
+					// output data of each row
+					while($row = $result->fetch_assoc()) {
+						echo "<tr><td>".$row["ID"]."</td><td>".$row["name"]."</td></tr>";
+					}
+				echo "</table>";
+				} else {
+					echo "0 results";
+				}
+				
+				
+				?> 
+				
+				<?php
+
 		}
 		
 		// Prints cast
@@ -185,6 +247,7 @@
 					echo $row["name"]."</a> as ".$row["role"]."<br>";
 				}
 			}	
+			
 		}
 		
 		// Prints awards

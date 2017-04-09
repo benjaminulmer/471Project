@@ -10,11 +10,10 @@
 	} 
 
 	$filmID = $_GET["ID"];
-	$desc = $db->real_escape_string($_REQUEST['description']);
-
-
-	
-	$sql = "UPDATE films SET description='$desc' WHERE ID='$filmID'";
+	$dirID = $_GET["dirID"];
+	echo $filmID;
+	echo $dirID;
+	$sql = "UPDATE films SET director=NULL WHERE ID='$filmID' AND director='$dirID'";
 	
 	if ($db->query($sql) === TRUE) {
 		echo "Record updated successfully";
@@ -24,5 +23,4 @@
 	
 	$db->close();
 	header("location: editFilmPage.php?ID=$filmID");
-
 ?>
