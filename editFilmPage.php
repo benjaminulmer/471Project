@@ -76,7 +76,7 @@
 		echo "<b>Runtime: </b>".$row["runtime"]." minutes<br>";
 		?>
 		<input type="number" name="runtime" value = "<?php echo $row["runtime"]; ?>"><br><br>
-		<input type="submit" class="button" name="submit" value="Edit"><br><br>
+		<input type="submit" class="button" name="submit" value="Edit Info"><br><br>
 		</form>
 		
 		
@@ -88,6 +88,18 @@
 		
 		genres();
 		echo "<br><br>".$description;
+		?>
+		<form action = "editFilmDesc.php" method = "GET">
+		<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">
+		
+		<TEXTAREA NAME="description"  ROWS=5 COLS=65 ><?php echo $row["description"]; ?></TEXTAREA><br>
+		<input type="submit" class="button" name="submit" value="Edit Description"><br><br>
+		</form>
+		
+		
+		<?php
+		
+		
 		director();
 		cast();
 		awards();
@@ -352,15 +364,7 @@
 			}
 		}
 		
-		
-		if (isset($_SESSION['is_mod']) And ($_SESSION['is_mod'] == 1)){
-			
-			
-			echo "<form action=editFilmPage.php?ID=".$_GET["ID"]."\">";
-			echo "<input type='submit' class='button' value='Edit Film'>";
-			echo "</form>";
-			
-		} 
+
 		?>
 				
 
