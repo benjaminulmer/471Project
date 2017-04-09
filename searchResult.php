@@ -31,6 +31,7 @@
 			films();
 			persons();
 			studios();
+			users();
 			
 			// Prints message if the user search is not in the database
 			if ($flag != true) {
@@ -116,6 +117,34 @@
 					
 					echo "<a href=\"studioPage.php?ID=".$row["ID"]."\">";
 					echo "<center>".$row["name"]."</center>";
+					
+					$flag = true;
+				}
+				echo "<br>";
+			}
+		}
+		
+		// Prints found users
+		function users() {
+			global $search, $conn, $flag;
+			
+			$sql = "SELECT *
+			        FROM users u
+			        WHERE u.username LIKE '%".$search."%'
+					ORDER BY u.username";
+					
+					
+			$result = $conn->query($sql);
+			if ($result == NULL) {
+				die("Failed");
+			}
+			
+			// Prints out studios
+			if($result->num_rows > 0){
+				while($row = $result->fetch_assoc()){
+					
+					echo "<a href=\"userPage.php?ID=".$row["ID"]."\">";
+					echo "<center>".$row["username"]."</center>";
 					
 					$flag = true;
 				}

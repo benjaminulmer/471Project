@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>User Page</title>
+		<title>Recommended Films</title>
 	</head>
 
 	<style>
@@ -32,7 +32,7 @@
 	
 	<body>
 		<?php include 'header.php' ?>
-		<font color="#3498DB"><center><h1>User Details</h1></center></font>
+		<font color="#3498DB"><center><h1>Recommended Films</h1></center></font>
 		<?php
 		
 		/*
@@ -61,27 +61,20 @@
 		
 		// Basic user info
 		$row = $result->fetch_assoc();
-		echo "<b>Name: </b>".$row["username"]; 
-		if ($row["moderator"]) {
-			echo "*";	// Includes star if user is a moderator
-		}
-		echo "<br><br>";
+		echo "<b>Name: </b>";
+		echo "<a href=\"userPage.php?ID=".$userID."\">";
+		echo $row["username"]; 
+		echo "</a><br>";
 		
-		echo "<a href=\"watchedPage.php?ID=".$row["ID"]."\">";
-		echo "Films ".$row["username"]." has seen</a><br>";
-		
-		echo "<a href=\"recommendPage.php?ID=".$row["ID"]."\">";
-		echo $row["username"]."'s recommendation queue</a><br>";
-		
-		reviews();
+		recommended();
 		$conn-> close();
 		
-		// Prints reviews
-		function reviews() {
+		// Prints recommended
+		function recommended() {
 			global $userID, $conn;
 			
 			$sql = "SELECT * 
-			        FROM reviews r, films f
+			        FROM recommended r, films f
 					WHERE f.ID = r.filmID
 					      AND r.userID = ".$userID;
 			
@@ -90,13 +83,32 @@
 				die("Failed");
 			}
 			
-			// Print out reviews
+			// Print out watched
 			if($result->num_rows > 0){
-				echo "<br><b>Reviews:</b><br>";
+				echo "<br><b>Recommended:</b><br>";
 				while($row = $result->fetch_assoc()){
 					echo "<a href=\"filmPage.php?ID=".$row["filmID"]."\">";
-					echo $row["name"]."</a>: ".$row["rating"]."/10<br>";
-					echo $row["review"]."<br><br>";
+					echo $row["name"]."</a>";
+					
+					if (isset($_SESSION['user_id']) And ($_SESSION['user_id'] == $userID)) {
+						
+						?>
+						<form action = "remove.php" method = "GET">
+						<input type="hidden" name = "filmID" value = "<?php echo $row["filmID"]; ?>">
+						<input type="hidden" name = "ID" value = "<?php echo $userID; ?>">	
+						<input type="submit" class="button" name="submit" value="Remove"><br><br>
+						</form>
+						<?php
+						
+						?>
+						<form action = "watched.php" method = "GET">
+						<input type="hidden" name = "filmID" value = "<?php echo $row["filmID"]; ?>">
+						<input type="hidden" name = "userID" value = "<?php echo $userID; ?>">	
+						<input type="submit" class="button" name="submit" value="Watched"><br><br>
+						</form>
+						<?php
+					}
+					echo "<br>";
 				}
 			}
 		}

@@ -15,10 +15,10 @@
 		$myusername = mysqli_real_escape_string($db,$_POST['username']);
 		$mypassword = mysqli_real_escape_string($db,$_POST['password']);
 		
-		$sql = "SELECT username 
+		$sql = "SELECT username, ID, moderator
 				FROM users 
 				WHERE username = '$myusername' 
-				AND passwordHash = '$mypassword'";
+				      AND passwordHash = '$mypassword'";
 				
 		$result = mysqli_query($db,$sql);
 		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
@@ -30,16 +30,9 @@
 		
 		if ($count == 1) {
 			
-			$_SESSION['login_user'] = $myusername;
-			
-			$sql = "SELECT moderator
-				FROM users
-				WHERE username ='$myusername'
-					";
-			$result = mysqli_query($db,$sql);
-			$row = $result->fetch_assoc();
-		 
-		$_SESSION['is_mod'] = $row["moderator"];
+			$_SESSION['login_user'] = $row["username"];
+			$_SESSION['user_id'] = $row["ID"];
+			$_SESSION['is_mod'] = $row["moderator"];
 			
 			header("location: homePage.php");
 		}

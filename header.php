@@ -34,7 +34,7 @@ session_start();
 		.button3 {
 			position: absolute;
 			top: 0;
-			right: 81px;
+			right: 110px;
 			padding: 6px 15px;
 			color: #3498DB;
 		}
@@ -75,8 +75,12 @@ session_start();
 			?>
 			
 			<form action="logout.php">
-			<input type="submit" class="button4" value="Log Out: <?php echo $_SESSION['login_user']; ?>">
+			<input type="submit" class="button3" value="Log Out">
 			</form>
+			<form action="userPage.php">
+			<input type="hidden" name = "ID" value = "<?php echo $_SESSION['user_id']; ?>">
+			<input type="submit" class="button4" value="<?php echo $_SESSION['login_user']; ?>">
+			</form
 			<?php
 		} else {
 		?>

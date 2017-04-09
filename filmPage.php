@@ -48,10 +48,33 @@
 		
 		$filmID = $_GET["ID"]; // This determines which film to show info for
 		
+		if (isset($_SESSION['user_id'])) {
+			$userID = $_SESSION['user_id'];
+			
+			$sql = "SELECT *
+					FROM watched w
+					WHERE w.userID = ".$userID."
+					      AND w.filmID = ".$filmID;
+			
+			$result = $conn->query($sql);
+			if ($result == NULL) {
+				die("Failed");
+			}
+			if($result->num_rows == 0) {
+				?>
+				<form action = "watched.php" method = "GET">
+				<input type="hidden" name = "filmID" value = "<?php echo $filmID; ?>">
+				<input type="hidden" name = "userID" value = "<?php echo $userID; ?>">	
+				<input type="submit" class="button" name="submit" value="Watched"><br><br>
+				<?php
+			}
+		}
+		
 		// **** Film information **** //
 		$sql = "SELECT * 
 				FROM films f
 				WHERE f.ID = ".$filmID;
+				
 		$result = $conn->query($sql);
 		if ($result == NULL) {
 			die("Failed");
