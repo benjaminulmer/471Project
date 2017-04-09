@@ -59,20 +59,20 @@
 		?>
 		<form action = "editFilmInfo.php?ID=" method = "GET">
 		<?php
-		// Basic film info
+		// Basic film info setting
 		$row = $result->fetch_assoc();
-		//name
+		//name setting
 		echo "<b>Name: </b>".$row["name"]."<br>";
 		?>
 		<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">
 		<input type="text" name="name" value = "<?php echo $row["name"]; ?>"><br><br>
 		<?php
-		//Year
+		//Year seting
 		echo "<b>Year: </b>".$row["year"]."<br>";
 		?>
 		<input type="year" name="year" value = "<?php echo $row["year"]; ?>"><br><br>
 		<?php
-		//Runtime
+		//Runtime setting
 		echo "<b>Runtime: </b>".$row["runtime"]." minutes<br>";
 		?>
 		<input type="number" name="runtime" value = "<?php echo $row["runtime"]; ?>"><br><br>
@@ -84,24 +84,22 @@
 		<?php
 		// Store description and dirID for later
 		$description = "<b>Description:</b><br>".$row["description"]."<br>";
-		
-		
-				$dirID = $row["director"];
-			
+		$dirID = $row["director"];		
 		
 		genres();
+		
+		//Description setting
 		echo "<br><br>".$description;
 		?>
 		<form action = "editFilmDesc.php" method = "GET">
-		<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">
-		
+		<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">		
 		<TEXTAREA NAME="description"  ROWS=5 COLS=65 ><?php echo $row["description"]; ?></TEXTAREA><br>
 		<input type="submit" class="button" name="submit" value="Edit Description"><br><br>
 		</form>
 		
 		
 		<?php
-		
+		//check if director is set
 		if (isset($dirID))  {
 				director();
 			}
