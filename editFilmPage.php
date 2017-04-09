@@ -56,13 +56,32 @@
 		if ($result == NULL) {
 			die("Failed");
 		}
-		editButton();
+		?>
+		<form action = "editFilmInfo.php?ID=" method = "GET">
+		<?php
 		// Basic film info
 		$row = $result->fetch_assoc();
-		echo "<b>Name: </b>".$row["name"]."<br>"; 
+		//name
+		echo "<b>Name: </b>".$row["name"]."<br>";
+		?>
+		<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">
+		<input type="text" name="name" value = "<?php echo $row["name"]; ?>"><br><br>
+		<?php
+		//Year
 		echo "<b>Year: </b>".$row["year"]."<br>";
+		?>
+		<input type="year" name="year" value = "<?php echo $row["year"]; ?>"><br><br>
+		<?php
+		//Runtime
 		echo "<b>Runtime: </b>".$row["runtime"]." minutes<br>";
+		?>
+		<input type="number" name="runtime" value = "<?php echo $row["runtime"]; ?>"><br><br>
+		<input type="submit" class="button" name="submit" value="Edit"><br><br>
+		</form>
 		
+		
+		
+		<?php
 		// Store description and dirID for later
 		$description = "<b>Description:</b><br>".$row["description"]."<br>";
 		$dirID = $row["director"];
@@ -79,7 +98,6 @@
 		trailers();
 		sequelsAndSimilar();
 		reviews();
-		
 		
 		$conn-> close();
 		
@@ -334,14 +352,15 @@
 			}
 		}
 		
-		function editButton(){
-			global $filmID;	
-			if (isset($_SESSION['is_mod']) And ($_SESSION['is_mod'] == 1)){
-				
-				echo "<a href=\"editFilmPage.php?ID=".$filmID."\">";
-					echo "Edit film info"."</a> "."<br>";				
-			}
-		}
+		
+		if (isset($_SESSION['is_mod']) And ($_SESSION['is_mod'] == 1)){
+			
+			
+			echo "<form action=editFilmPage.php?ID=".$_GET["ID"]."\">";
+			echo "<input type='submit' class='button' value='Edit Film'>";
+			echo "</form>";
+			
+		} 
 		?>
 				
 
