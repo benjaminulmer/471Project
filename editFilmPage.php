@@ -116,8 +116,22 @@
 		cast();
 		awards();
 		echo "<br><b>Box Office:</b><br>";
+		?>
+		<form action = "editFilmMoney.php?ID=" method = "GET">
+		<?php
 		echo "<u>Budget:</u> $".$row["budget"]."<br>";
-		echo "<u>Gross:</u> $".$row["boxOffice"]."<br>";
+		?>
+		<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">
+		<input type="text" name="budget" value = "<?php echo $row["budget"]; ?>"><br>		
+		<?php
+		echo "<u>Gross:</u> $".$row["boxOffice"]."";
+		?>
+		<br>
+		<input type="text" name="gross" value = "<?php echo $row["boxOffice"]; ?>"><br>
+		<input type="submit" class="button" name="submit" value="Edit Money Info"><br><br>
+		</form>		
+		<?php
+		
 		studios();
 		trailers();
 		sequelsAndSimilar();
