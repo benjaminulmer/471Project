@@ -36,14 +36,14 @@
 	} 
 	
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
-		// username and password sent from form
 		
 		$filmname = mysqli_real_escape_string($db,$_POST['name']);
 		$year = mysqli_real_escape_string($db,$_POST['year']);
-		$budget = mysqli_real_escape_string($db,$_POST['budget']);
-		$boxOffice = mysqli_real_escape_string($db,$_POST['boxOffice']);
+		$runtime = mysqli_real_escape_string($db,$_POST['runtime']);
 		$description = mysqli_real_escape_string($db,$_POST['description']);
 		$director = mysqli_real_escape_string($db,$_POST['director']);
+		$budget = mysqli_real_escape_string($db,$_POST['budget']);
+		$boxOffice = mysqli_real_escape_string($db,$_POST['boxOffice']);
 			
 		$sql = "SELECT name 
 				FROM films 
@@ -67,8 +67,8 @@
 		}
 		else {
 			
-			$query = "INSERT INTO films (name, year, budget,boxOffice,description,director)
-			VALUES('$filmname', '$year', '$budget','$boxOffice','$description','$director')";
+			$query = "INSERT INTO films (name, year, runtime, description, director, budget, boxOffice)
+			VALUES('$filmname', '$year', '$runtime', '$description','$director', '$budget','$boxOffice')";
 			
 			$db->query($query);
 			$accmessage = "Film Added";
@@ -96,7 +96,11 @@
 			<span style="display: inline-block"></span>
 			<input type="number" name="runtime"><br><br>
 			
-			<font style="margin-left: -95px" color="#3498DB"><b>Description:</b></font>
+			<!-- <font style="margin-left: -56px" color="#3498DB"><b>Genre:</b></font>
+			<span style="display: inline-block"></span>
+			<input type="text" name="name"><br><br> -->
+			
+			<font style="margin-left: -94px" color="#3498DB"><b>Description:</b></font>
 			<span style="display: inline-block"></span>
 			<input type="text" name="description"><br><br>
 			

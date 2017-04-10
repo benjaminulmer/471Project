@@ -5,15 +5,14 @@
 		<meta charset="UTF-8">
 		<title>Film Page</title>
 	</head>
-
-
+	
 	<style>
 		h1 {
 			width: 500px;
 			margin: 50px auto;
 		}
 		.button {
-			width: 249px;
+			width: 250px;
 			padding: 6px 15px;
 			border: 2px solid #3498DB;
 			background-color: #3498DB;
@@ -26,7 +25,6 @@
 		}
 
 	</style>
-	
 	
 	<body>		
 		<?php include 'header.php' ?>
@@ -65,7 +63,7 @@
 				<form action = "watched.php" method = "GET">
 				<input type="hidden" name = "filmID" value = "<?php echo $filmID; ?>">
 				<input type="hidden" name = "userID" value = "<?php echo $userID; ?>">	
-				<input type="submit" class="button" name="submit" value="Watched"><br><br>
+				<input style="margin-left:8px" type="submit" class="button" name="submit" value="Watched"><br><br>
 				<?php
 			}
 		}
