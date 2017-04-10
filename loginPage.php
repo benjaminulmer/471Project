@@ -56,7 +56,7 @@
 			text-indent: -32px;
 		}
 		.button {
-			width: 249px;
+			width: 258px;
 			padding: 6px 15px;
 			border: 2px solid #3498DB;
 			background-color: #3498DB;
@@ -109,10 +109,10 @@
 			<span style="display: inline-block; width: 3px;"></span>
 			<input type="text" name="username"><br><br>
 			<font color="#3498DB"><b>Password:</b></font>
-			<span style="display: inline-block; width: 7px;"></span>
+			<span style="display: inline-block; width: 6px;"></span>
 			<input type="password" name="password"><br><br>
 			<input type="submit" class="button" name="submit" value="Login"><br><br>
-			<div id="div">Not registered? <a href="signUpPage.php">Create an account</a></div>
+			<div style="margin-left:-8px" id="div">Not registered? <a href="signUpPage.php">Create an account</a></div>
 		</form></center>
 	</body>
 </html>

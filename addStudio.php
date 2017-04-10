@@ -10,30 +10,15 @@
 			width: 500px;
 			margin: 50px auto;
 		}
-		form {
-			display: inline;
-		}
 		.button {
-			width: 250px;
+			width: 173px;
+			margin-left: 16px;
 			padding: 6px 15px;
 			border: 2px solid #3498DB;
 			background-color: #3498DB;
 			color: white;
 		}
-		.button5 {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			padding: 6px 15px;
-			border: 2px solid #3498DB;
-			background-color: #3498DB;
-			color: #fafafa;
-		}
 		.button:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
-		.button5:hover {
 			background-color: #fafafa;
 			color: #207cca;
 		}
@@ -56,8 +41,7 @@
 		$studioname = mysqli_real_escape_string($db,$_POST['name']);
 		$founded = mysqli_real_escape_string($db,$_POST['founded']);
 		$headquarters = mysqli_real_escape_string($db,$_POST['headquarters']);
-
-			
+		
 		$sql = "SELECT name 
 				FROM studios 
 				WHERE name = '$studioname' 
@@ -77,15 +61,11 @@
 			$message = "Studio name already taken.";
 			$db->close();
 			echo "<script type='text/javascript'>alert('$message'); location='addStudio.php';</script>";
-			
-			
 		}
 		else {
 			
-	
 			$query = "INSERT INTO studios (name, founded, headquarters)
 			VALUES('$studioname', '$founded', '$headquarters')";
-			
 			
 			$db->query($query);
 			$accmessage = "Studio Added";
@@ -93,31 +73,28 @@
 			echo "<script type='text/javascript'>alert('$accmessage'); location='modPage.php';</script>";
 		}
 	}
-?>	
-	
+?>
+
 	<body>
 		<?php include 'header.php' ?>
 		
 		<font color="#3498DB"><center><h1>Add Studio</h1></center></font>
 		<center><form action = "" method = "post">
 			
-			<font color="#3498DB"><b>Studio Name:</b></font>
-			<span style="display: inline-block; width: 3px;"></span>
+			<font style="margin-left: -100px" color="#3498DB"><b>Studio Name:</b></font>
+			<span style="display: inline-block"></span>
 			<input type="text" name="name"><br><br>
 			
-			<font color="#3498DB"><b>Founded:</b></font>
-			<span style="display: inline-block; width: 7px;"></span>
+			<font style="margin-left: -100px" color="#3498DB"><b>Founded:</b></font>
+			<span style="display: inline-block"></span>
 			<input type="date" name="founded"><br><br>			
 			
-			<font color="#3498DB"><b>Headquaters:</b></font>
-			<span style="display: inline-block; width: 7px;"></span>
+			<font style="margin-left: -100px" color="#3498DB"><b>Headquaters:</b></font>
+			<span style="display: inline-block"></span>
 			<input type="text" name="headquarters"><br><br>
 			
 			
 			<input type="submit" class="button" name="submit" value="Add Studio"><br><br>
 		</form></center>
-
-
-				
 	</body>
 </html>

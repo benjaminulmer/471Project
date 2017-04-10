@@ -10,34 +10,20 @@
 			width: 500px;
 			margin: 50px auto;
 		}
-		form {
-			display: inline;
-		}
 		.button {
-			width: 250px;
+			width: 173px;
+			margin-left: 14px;
 			padding: 6px 15px;
 			border: 2px solid #3498DB;
 			background-color: #3498DB;
 			color: white;
 		}
-		.button5 {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			padding: 6px 15px;
-			border: 2px solid #3498DB;
-			background-color: #3498DB;
-			color: #fafafa;
-		}
 		.button:hover {
 			background-color: #fafafa;
 			color: #207cca;
 		}
-		.button5:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
 	</style>
+	
 <?php
 	define('DB_SERVER', 'localhost');
 	define('DB_USERNAME', 'root');
@@ -78,15 +64,11 @@
 			$message = "Film name already taken.";
 			$db->close();
 			echo "<script type='text/javascript'>alert('$message'); location='addMovie.php';</script>";
-			
-			
 		}
 		else {
 			
-	
 			$query = "INSERT INTO films (name, year, budget,boxOffice,description,director)
 			VALUES('$filmname', '$year', '$budget','$boxOffice','$description','$director')";
-			
 			
 			$db->query($query);
 			$accmessage = "Film Added";
@@ -94,49 +76,49 @@
 			echo "<script type='text/javascript'>alert('$accmessage'); location='modPage.php';</script>";
 		}
 	}
-?>		
+?>
+
 	<body>
 		<?php include 'header.php' ?>
 		
 		<font color="#3498DB"><center><h1>Add Movie</h1></center></font>
 		<center><form action = "" method = "post">
 			
-			<font color="#3498DB"><b>Film Name:</b></font>
-			<span style="display: inline-block; width: 3px;"></span>
+			<font style="margin-left: -90px" color="#3498DB"><b>Film Name:</b></font>
+			<span style="display: inline-block"></span>
 			<input type="text" name="name"><br><br>
 			
-			<font color="#3498DB"><b>Year:</b></font>
-			<span style="display: inline-block; width: 7px;"></span>
+			<font style="margin-left: -144px" color="#3498DB"><b>Year:</b></font>
+			<span style="display: inline-block"></span>
 			<input type="number" min="1900" max="2017" name="year"><br><br>
 
-			<font color="#3498DB"><b>Runtime(in Minutes): </b></font>
-			<span style="display: inline-block; width: 7px;"></span>
+			<font style="margin-left: -116px" color="#3498DB"><b>Runtime (min): </b></font>
+			<span style="display: inline-block"></span>
 			<input type="number" name="runtime"><br><br>
 
-			<font color="#3498DB"><b>Budget:</b></font>
-			<span style="display: inline-block; width: 7px;"></span>
+			<font style="margin-left: -63px" color="#3498DB"><b>Budget:</b></font>
+			<span style="display: inline-block"></span>
 			<input type="number" name="budget"><br><br>	
 
-			<font color="#3498DB"><b>Box Office:</b></font>
-			<span style="display: inline-block; width: 7px;"></span>
+			<font style="margin-left: -86px" color="#3498DB"><b>Box Office:</b></font>
+			<span style="display: inline-block"></span>
 			<input type="number" name="boxOffice"><br><br>
 
-			<font color="#3498DB"><b>Description:</b></font>
-			<span style="display: inline-block; width: 7px;"></span>
+			<font style="margin-left: -95px" color="#3498DB"><b>Description:</b></font>
+			<span style="display: inline-block"></span>
 			<input type="text" name="description"><br><br>
 			
-			<font color="#3498DB"><b>Director(use ID):</b></font>
-			<span style="display: inline-block; width: 7px;"></span>
+			<font style="margin-left: -130px" color="#3498DB"><b>Director (use ID):</b></font>
+			<span style="display: inline-block"></span>
 			<input type="number" name="director"><br><br>
 
 			
-			<input type="submit" class="button" name="submit" value="Add Film"><br><br>
+			<input type="submit" class="button" name="submit" value="Add Movie"><br><br>
 		</form></center>
-		Directors
+		<div style="margin-left:3px"><b>Directors</b></div>
 		<?php
 
 		$conn = new mysqli(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
-		
 		
 		// Check connection
 		if ($conn->connect_error) {
@@ -152,7 +134,7 @@
 			echo "<table><tr><th>ID</th><th>Name</th></tr>";
 			// output data of each row
 			while($row = $result->fetch_assoc()) {
-				echo "<tr><td>".$row["ID"]."</td><td>".$row["name"]."</td></tr>";
+				echo "<tr><td>".$row["ID"]."</td><td> &nbsp;&nbsp;&nbsp;".$row["name"]."</td></tr>";
 			}
 		echo "</table>";
 		} else {

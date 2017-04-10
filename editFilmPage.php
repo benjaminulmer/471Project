@@ -24,7 +24,6 @@
 			background-color: #fafafa;
 			color: #207cca;
 		}
-
 	</style>
 	
 	
@@ -116,8 +115,22 @@
 		cast();
 		awards();
 		echo "<br><b>Box Office:</b><br>";
+		?>
+		<form action = "editFilmMoney.php?ID=" method = "GET">
+		<?php
 		echo "<u>Budget:</u> $".$row["budget"]."<br>";
-		echo "<u>Gross:</u> $".$row["boxOffice"]."<br>";
+		?>
+		<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">
+		<input type="number" name="budget" value = "<?php echo $row["budget"]; ?>"><br>		
+		<?php
+		echo "<u>Gross:</u> $".$row["boxOffice"]."";
+		?>
+		<br>
+		<input type="number" name="gross" value = "<?php echo $row["boxOffice"]; ?>"><br>
+		<input type="submit" class="button" name="submit" value="Edit Money Info"><br><br>
+		</form>		
+		<?php
+		
 		studios();
 		trailers();
 		sequelsAndSimilar();
@@ -222,7 +235,6 @@
 				}
 				
 				
-
 		}
 		
 		// Prints cast
@@ -249,7 +261,7 @@
 					?>
 					<form action = "removeFilmActor.php" method = "GET">
 					<input type="hidden" name = "filmID" value = "<?php echo $filmID; ?>">
-					<input type="hidden" name = "actID" value = "<?php echo $filmID; ?>">
+					<input type="hidden" name = "actID" value = "<?php echo $row["actorID"]; ?>">
 					<input type="submit" class="button" name="submit" value="Delete Actor"><br>
 					</form>
 					<?php
@@ -462,14 +474,19 @@
 					
 					echo "<a href=\"userPage.php?ID=".$row["userID"]."\">";
 					echo $row["username"]."</a>: ".$row["rating"]."/10<br>";
-					echo $row["review"]."<br><br>";
+					echo $row["review"]."<br>";
+					?>
+					<form action = "removeFilmReview.php" method = "GET">
+					<input type="hidden" name = "filmID" value = "<?php echo $filmID; ?>">
+					<input type="hidden" name = "userID" value = "<?php echo $row["userID"]; ?>">
+					<input type="submit" class="button" name="submit" value="Delete Review"><br>
+					</form>
+					<?php
 				}
 			}
 		}
 		
-
 		?>
-				
-
+		
 	</body>
 </html>

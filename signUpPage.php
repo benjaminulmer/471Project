@@ -14,7 +14,7 @@ session_start();
 			margin: 50px auto;
 		}
 		.button {
-			width: 249px;
+			width: 258px;
 			padding: 6px 15px;
 			border: 2px solid #3498DB;
 			background-color: #3498DB;
@@ -80,9 +80,27 @@ session_start();
 		
 		$count = mysqli_num_rows($result);
 		
+		// if username is not entered, account is not created
+		if (strlen($myusername) == 0) {
+			
+			session_destroy();
+			$message = "No username entered.";
+			$db->close();
+			echo "<script type='text/javascript'>alert('$message'); location='signUpPage.php';</script>";
+		}
+		
+		// if username is longer than 9 characters, it is too long
+		else if (strlen($myusername) > 9) {
+			
+			session_destroy();
+			$message = "Username cannot exceed 9 characters.";
+			$db->close();
+			echo "<script type='text/javascript'>alert('$message'); location='signUpPage.php';</script>";
+		}
+		
 		// if result matched $myusername and $mypassword, table row must be 1 row
 		// means the account is already made
-		if ($count == 1) {
+		else if ($count == 1) {
 			
 			session_destroy();
 			$message = "Username already taken.";
@@ -114,9 +132,10 @@ session_start();
 			<span style="display: inline-block; width: 3px;"></span>
 			<input type="text" name="username"><br><br>
 			<font color="#3498DB"><b>Password:</b></font>
-			<span style="display: inline-block; width: 7px;"></span>
+			<span style="display: inline-block; width: 6px;"></span>
 			<input type="password" name="password"><br><br>
 			<input type="submit" class="button" name="submit" value="Create Account"><br><br>
+			<div style="margin-left:-40px" id="div">Already have an account? <a href="loginPage.php">Sign In</a></div>
 		</form></center>
 	</body>
 </html>
