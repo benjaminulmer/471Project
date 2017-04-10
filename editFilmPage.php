@@ -57,6 +57,12 @@
 			die("Failed");
 		}
 		?>
+		<form action = "deleteFilm.php" method = "GET">
+		<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">
+		<input type="submit" class = "button" name = "submit" value = "Delete Film from the Database"><br><br>
+		
+		</form>
+		
 		<form action = "editFilmInfo.php?ID=" method = "GET">
 		<?php
 		// Basic film info setting
