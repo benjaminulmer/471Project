@@ -137,21 +137,23 @@
 		function director() {
 			global $dirID, $conn;
 			
-			$sql = "SELECT * 
-					FROM directors d, persons p
-					WHERE d.ID = ".$dirID."
-						  AND p.ID = d.ID";
-			
-			$result = $conn->query($sql);
-			if ($result == NULL) {
-				die("Failed");
-			}
-			
-			// Director name
-			if($result->num_rows > 0) {
-				$row = $result->fetch_assoc();
-				echo "<br><b>Directors:</b> <a href=\"personPage.php?ID=".$dirID."\">";
-				echo $row["name"]."</a><br>"; 
+			if ($dirID != NULL) {
+				$sql = "SELECT * 
+						FROM directors d, persons p
+						WHERE d.ID = ".$dirID."
+							  AND p.ID = d.ID";
+				
+				$result = $conn->query($sql);
+				if ($result == NULL) {
+					die("Failed");
+				}
+				
+				// Director name
+				if($result->num_rows > 0) {
+					$row = $result->fetch_assoc();
+					echo "<br><b>Directors:</b> <a href=\"personPage.php?ID=".$dirID."\">";
+					echo $row["name"]."</a><br>"; 
+				}
 			}
 		}
 		
