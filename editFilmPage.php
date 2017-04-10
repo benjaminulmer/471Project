@@ -249,7 +249,7 @@
 					?>
 					<form action = "removeFilmActor.php" method = "GET">
 					<input type="hidden" name = "filmID" value = "<?php echo $filmID; ?>">
-					<input type="hidden" name = "actID" value = "<?php echo $filmID; ?>">
+					<input type="hidden" name = "actID" value = "<?php echo $row["actorID"]; ?>">
 					<input type="submit" class="button" name="submit" value="Delete Actor"><br>
 					</form>
 					<?php
@@ -462,7 +462,14 @@
 					
 					echo "<a href=\"userPage.php?ID=".$row["userID"]."\">";
 					echo $row["username"]."</a>: ".$row["rating"]."/10<br>";
-					echo $row["review"]."<br><br>";
+					echo $row["review"]."<br>";
+					?>
+					<form action = "removeFilmReview.php" method = "GET">
+					<input type="hidden" name = "filmID" value = "<?php echo $filmID; ?>">
+					<input type="hidden" name = "userID" value = "<?php echo $row["userID"]; ?>">
+					<input type="submit" class="button" name="submit" value="Delete Review"><br>
+					</form>
+					<?php
 				}
 			}
 		}
