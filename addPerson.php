@@ -54,15 +54,31 @@
 		// username and password sent from form
 		
 		$personname = mysqli_real_escape_string($db,$_POST['name']);
+		$job = mysqli_real_escape_string($db,$_POST['job']);
 		$dateOfBirth = mysqli_real_escape_string($db,$_POST['dateOfBirth']);
 		$dateOfDeath = mysqli_real_escape_string($db,$_POST['dateOfDeath']);
 			
 	
 		$query = "INSERT INTO persons (name, dateOfBirth, dateOfDeath)
 		VALUES('$personname', '$dateOfBirth', '$dateOfDeath')";
-			
-			
 		$db->query($query);
+		
+
+		
+		if($job == 'Actor'){
+			$query = "SELECT MAX(ID) AS max FROM persons";
+			$result=  $db->query($query);
+			$row = $result->fetch_assoc();
+			$actorID = $row["max"];
+			
+			
+			$query = "INSERT INTO actors (ID)
+			VALUES('$actorID')";
+			$db->query($query);
+		}
+
+		
+		
 		$accmessage = "Person Added";
 		$db->close();
 		echo "<script type='text/javascript'>alert('$accmessage'); location='modPage.php';</script>";
@@ -78,7 +94,10 @@
 			
 			<font color="#3498DB"><b>Person Name:</b></font>
 			<span style="display: inline-block; width: 3px;"></span>
-			<input type="text" name="name"><br><br>
+			<input type="text" name="name"><br>
+			
+			<input type="radio" name="job" value="Actor"> Actor
+			<input type="radio" name="job" value="Director"> Director<br>
 			
 			<font color="#3498DB"><b>Date of Birth:</b></font>
 			<span style="display: inline-block; width: 7px;"></span>
