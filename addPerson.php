@@ -54,7 +54,8 @@
 		// username and password sent from form
 		
 		$personname = mysqli_real_escape_string($db,$_POST['name']);
-		$job = mysqli_real_escape_string($db,$_POST['job']);
+		$actor = mysqli_real_escape_string($db,$_POST['actor']);
+		$director = mysqli_real_escape_string($db,$_POST['director']);
 		$dateOfBirth = mysqli_real_escape_string($db,$_POST['dateOfBirth']);
 		$dateOfDeath = mysqli_real_escape_string($db,$_POST['dateOfDeath']);
 			
@@ -65,7 +66,7 @@
 		
 
 		
-		if($job == 'Actor'){
+		if($actor == 'Actor'){
 			$query = "SELECT MAX(ID) AS max FROM persons";
 			$result=  $db->query($query);
 			$row = $result->fetch_assoc();
@@ -74,6 +75,17 @@
 			
 			$query = "INSERT INTO actors (ID)
 			VALUES('$actorID')";
+			$db->query($query);
+		}
+		if($director == 'Director'){
+			$query = "SELECT MAX(ID) AS max FROM persons";
+			$result=  $db->query($query);
+			$row = $result->fetch_assoc();
+			$directorID = $row["max"];
+			
+			
+			$query = "INSERT INTO directors (ID)
+			VALUES('$directorID')";
 			$db->query($query);
 		}
 
@@ -96,8 +108,8 @@
 			<span style="display: inline-block; width: 3px;"></span>
 			<input type="text" name="name"><br>
 			
-			<input type="radio" name="job" value="Actor"> Actor
-			<input type="radio" name="job" value="Director"> Director<br>
+			<input type="checkbox" name="actor" value="Actor"> Actor
+			<input type="checkbox" name="director" value="Director"> Director<br>
 			
 			<font color="#3498DB"><b>Date of Birth:</b></font>
 			<span style="display: inline-block; width: 7px;"></span>

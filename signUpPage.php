@@ -61,7 +61,7 @@ session_start();
 	$db = new mysqli(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
 	
 	if ($db->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+		die("Connection failed: " . $conn->connect_error);
 	} 
 	
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -72,8 +72,7 @@ session_start();
 		
 		$sql = "SELECT username 
 				FROM users 
-				WHERE username = '$myusername' 
-				";
+				WHERE username = '$myusername' ";
 				
 		$result = $db->query($sql);
 		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
@@ -89,25 +88,10 @@ session_start();
 			$message = "Username already taken.";
 			$db->close();
 			echo "<script type='text/javascript'>alert('$message'); location='signUpPage.php';</script>";
-			
-			
 		}
 		else {
-			
-			//insert user
-			/*
-			$query =
-			"INSERT 
-			INTO users
-			VALUES ('$myusername',''$mypassword','0')"
-			mysqli_query($db,$query)*/
-			
-
-			
-			
 			$query = "INSERT INTO users (username, passwordHash, moderator)
-			VALUES('$myusername', '$mypassword', '0')";
-			
+				      VALUES('$myusername', '$mypassword', '0')";
 			
 			mysqli_query($db, $query);
 			$accmessage = "Account Created";
