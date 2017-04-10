@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Film Page</title>
+		<title>Edit Film Page</title>
 	</head>
 
 
@@ -222,9 +222,6 @@
 				}
 				
 				
-				?> 
-				
-				<?php
 
 		}
 		
@@ -249,8 +246,47 @@
 				while($row = $result->fetch_assoc()){
 					echo "<a href=\"personPage.php?ID=".$row["actorID"]."\">";
 					echo $row["name"]."</a> as ".$row["role"]."<br>";
+					?>
+					<form action = "removeFilmActor.php" method = "GET">
+					<input type="hidden" name = "filmID" value = "<?php echo $filmID; ?>">
+					<input type="hidden" name = "actID" value = "<?php echo $filmID; ?>">
+					<input type="submit" class="button" name="submit" value="Delete Actor"><br>
+					</form>
+					<?php
+					
 				}
 			}	
+			
+			//Add Actors to movie
+			?>
+			<form action = "addFilmActors.php" method = "GET">
+			<font color="#3498DB"><b>Add Actor(Use ID):</b></font><br>
+			<input type="hidden" name = "filmID" value = "<?php echo $filmID; ?>">
+			ID:
+			<input type="number" name="actID"><br>
+			Role:
+			<input type= "text" name = "role"><br>
+			<input type="submit" class="button" name="submit" value="Add Actor"><br>
+			</form>
+			<br>
+			<b>Actors</b><?php
+			//List the actors and IDS
+			$sql = "SELECT a.ID, name FROM actors AS a, persons AS p
+			WHERE a.ID = p.ID
+			GROUP BY ID";
+			
+			$result2 = $conn->query($sql);
+		
+			if ($result2->num_rows > 0) {
+				echo "<table><tr><th>ID</th><th>Name</th></tr>";
+				
+				while($row = $result2->fetch_assoc()) {
+					echo "<tr><td>".$row["ID"]."</td><td>".$row["name"]."</td></tr>";
+				}
+			echo "</table>";
+			} else {
+				echo "0 results";
+			}
 			
 		}
 		
