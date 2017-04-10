@@ -95,15 +95,7 @@
 			<font style="margin-left: -116px" color="#3498DB"><b>Runtime (min): </b></font>
 			<span style="display: inline-block"></span>
 			<input type="number" name="runtime"><br><br>
-
-			<font style="margin-left: -63px" color="#3498DB"><b>Budget:</b></font>
-			<span style="display: inline-block"></span>
-			<input type="number" name="budget"><br><br>	
-
-			<font style="margin-left: -86px" color="#3498DB"><b>Box Office:</b></font>
-			<span style="display: inline-block"></span>
-			<input type="number" name="boxOffice"><br><br>
-
+			
 			<font style="margin-left: -95px" color="#3498DB"><b>Description:</b></font>
 			<span style="display: inline-block"></span>
 			<input type="text" name="description"><br><br>
@@ -111,7 +103,14 @@
 			<font style="margin-left: -130px" color="#3498DB"><b>Director (use ID):</b></font>
 			<span style="display: inline-block"></span>
 			<input type="number" name="director"><br><br>
+			
+			<font style="margin-left: -63px" color="#3498DB"><b>Budget:</b></font>
+			<span style="display: inline-block"></span>
+			<input type="number" name="budget"><br><br>	
 
+			<font style="margin-left: -54px" color="#3498DB"><b>Gross:</b></font>
+			<span style="display: inline-block"></span>
+			<input type="number" name="boxOffice"><br><br>
 			
 			<input type="submit" class="button" name="submit" value="Add Movie"><br><br>
 		</form></center>
