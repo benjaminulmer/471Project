@@ -122,7 +122,7 @@
 		?>
 		<br>
 		<input type="number" name="gross" value = "<?php echo $row["boxOffice"]; ?>"><br>
-		<input type="submit" style="margin-left:8px" class="button" name="submit" value="Edit Money Info"><br><br>
+		<input type="submit" style="margin-left:8px" class="button" name="submit" value="Confirm Change"><br><br>
 		</form>		
 		<?php
 		
