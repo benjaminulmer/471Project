@@ -24,7 +24,6 @@
 			background-color: #fafafa;
 			color: #207cca;
 		}
-
 	</style>
 	
 	
@@ -236,7 +235,6 @@
 				}
 				
 				
-
 		}
 		
 		// Prints cast
@@ -488,9 +486,7 @@
 			}
 		}
 		
-
 		?>
-				
-
+		
 	</body>
 </html>

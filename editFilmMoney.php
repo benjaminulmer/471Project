@@ -8,12 +8,9 @@
 	if ($db==false) {
     die("Connection failed: " . $db->connect_error);
 	} 
-
 	$filmID = $_GET["ID"];
 	$budget = $db->real_escape_string($_REQUEST['budget']);
 	$gross = $db->real_escape_string($_REQUEST['gross']);
-
-
 	
 	$sql = "UPDATE films SET budget='$budget', boxOffice='$gross' WHERE ID='$filmID'";
 	

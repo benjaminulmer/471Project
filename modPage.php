@@ -21,7 +21,7 @@
 		<font color="#3498DB"><center><h1>Moderator Page</h1></center></font>
 		<center>
 			<form action="addMovie.php">
-			<input type="submit" class="button" value="Add Film">
+			<input type="submit" class="button" value="Add Movie">
 			</form>
 			<span style="display: inline-block; width: 1px;"></span>
 			<form action="addPerson.php">
@@ -31,8 +31,6 @@
 			<form action="addStudio.php">
 			<input type="submit" class="button" value="Add Studio">
 			</form>
-
-			
 		</center>
 	</body>
 </html>

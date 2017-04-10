@@ -34,7 +34,7 @@ session_start();
 		.button3 {
 			position: absolute;
 			top: 0;
-			right: 110px;
+			right: 81px;
 			padding: 6px 15px;
 			color: #3498DB;
 		}
@@ -46,6 +46,13 @@ session_start();
 			border: 2px solid #3498DB;
 			background-color: #3498DB;
 			color: #fafafa;
+		}
+		.button0 {
+			position: absolute;
+			top: 0;
+			right: 115px;
+			padding: 6px 15px;
+			color: #3498DB;
 		}
 		.button:hover {
 			background-color: #fafafa;
@@ -63,6 +70,10 @@ session_start();
 			background-color: #fafafa;
 			color: #207cca;
 		}
+		.button0:hover {
+			background-color: #fafafa;
+			color: #207cca;
+		}
 	</style>	
 	
 	<body>
@@ -75,7 +86,7 @@ session_start();
 			?>
 			
 			<form action="logout.php">
-			<input type="submit" class="button3" value="Log Out">
+			<input type="submit" class="button0" value="Log Out">
 			</form>
 			<form action="userPage.php">
 			<input type="hidden" name = "ID" value = "<?php echo $_SESSION['user_id']; ?>">
@@ -92,6 +103,7 @@ session_start();
 			</form>
 			<?php
 		}
-		?>	
+		?>
+		
 	</body>
 </html>

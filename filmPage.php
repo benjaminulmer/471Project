@@ -376,9 +376,9 @@
 				<input type="hidden" name = "filmID" value = "<?php echo $filmID; ?>">
 				<input type="hidden" name = "userID" value = "<?php echo $userID; ?>">
 				<br>Rating (out of 10)
-				<input type="number" name="rating"><br>	
+				<input type="number" name="rating"><br>
 				<TEXTAREA name="review"  ROWS=5 COLS=65 ></TEXTAREA><br>
-				<input type="submit" class="button" name="submit" value="Post Review"><br><br>
+				<input type="submit" style="margin-left:8px" class="button" name="submit" value="Post Review"><br><br>
 				<?php
 			}
 		}
@@ -394,7 +394,6 @@
 			}
 		}
 		?>
-				
-
+		
 	</body>
 </html>
