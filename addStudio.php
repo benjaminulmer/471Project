@@ -74,7 +74,7 @@
 		if ($count == 1) {
 			
 			session_destroy();
-			$message = "Film name already taken.";
+			$message = "Studio name already taken.";
 			$db->close();
 			echo "<script type='text/javascript'>alert('$message'); location='addStudio.php';</script>";
 			
