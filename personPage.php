@@ -11,36 +11,13 @@
 			width: 500px;
 			margin: 50px auto;
 		}
-		.button {
-			width: 249px;
-			padding: 6px 15px;
-			border: 2px solid #3498DB;
-			background-color: #3498DB;
-			color: white;
-			font-size: 16px;
-		}
-		.button:hover {
-			background-color: #fafafa;
-			color: #207cca;
-		}
 	</style>
-	
 	
 	<body>
 		<?php include 'header.php' ?>
 		<font color="#3498DB"><center><h1>Person Details</h1></center></font>
 		<?php
 		
-		/*
-		Code to open page will look something like this:
-		
-		<form action="personPage.php" method="get">
-			<input type="submit" class="button" name="ID" value="3">
-		</form>
-		
-		can also be accessed directly with .../personPage.php?ID=3
-		*/
-
 		$conn;
 		include 'dbConnect.php';
 		

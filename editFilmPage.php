@@ -30,16 +30,6 @@
 		<font color="#3498DB"><center><h1>Film Details</h1></center></font>
 		<?php
 		
-		/*
-		Code to open page will look something like this:
-		
-		<form action="filmPage.php" method="get">
-			<input type="submit" class="button" name="ID" value="3">
-		</form>
-		
-		can also be accessed directly with .../filmPage.php?ID=3
-		*/
-	
 		$conn;
 		include 'dbConnect.php';
 		

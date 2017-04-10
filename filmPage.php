@@ -31,16 +31,6 @@
 		<font color="#3498DB"><center><h1>Film Details</h1></center></font>
 		<?php
 		
-		/*
-		Code to open page will look something like this:
-		
-		<form action="filmPage.php" method="get">
-			<input type="submit" class="button" name="ID" value="3">
-		</form>
-		
-		can also be accessed directly with .../filmPage.php?ID=3
-		*/
-	
 		$conn;
 		include 'dbConnect.php';
 		
@@ -100,7 +90,6 @@
 		trailers();
 		sequelsAndSimilar();
 		reviews();
-		
 		
 		$conn-> close();
 		
@@ -190,6 +179,7 @@
 					WHERE w.personID = p.ID
 					      AND w.awardID = a.ID
 						  AND w.filmID = ".$filmID;
+			
 			$result = $conn->query($sql);
 			if ($result == NULL) {
 				die("Failed");
@@ -388,7 +378,7 @@
 			if (isset($_SESSION['is_mod']) And ($_SESSION['is_mod'] == 1)){
 				
 				echo "<a href=\"editFilmPage.php?ID=".$filmID."\">";
-					echo "Edit film info"."</a> "."<br>";				
+					echo "Edit film info"."</a> "."<br>";
 			}
 		}
 		?>

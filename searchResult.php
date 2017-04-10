@@ -8,17 +8,7 @@
 	
 	<body>
 		<?php
-		
-			/*
-			Code to open page will look something like this:
 			
-			<form action="searchResult.php" method="get">
-				<input type="submit" class="button" name="search" value="some string">
-			</form>
-			
-			can also be accessed directly with .../searchResult.php?search=some string
-			*/
-	
 			$conn;
 			$flag = false;
 			include 'dbConnect.php';
@@ -49,7 +39,6 @@
 			        WHERE f.name LIKE '%".$search."%'
 					ORDER BY f.year";
 					
-					
 			$result = $conn->query($sql);
 			if ($result == NULL) {
 				die("Failed");
@@ -76,7 +65,6 @@
 			        FROM persons p
 			        WHERE p.name LIKE '%".$search."%'
 					ORDER BY p.name";
-					
 					
 			$result = $conn->query($sql);
 			if ($result == NULL) {
@@ -105,7 +93,6 @@
 			        WHERE s.name LIKE '%".$search."%'
 					ORDER BY s.name";
 					
-					
 			$result = $conn->query($sql);
 			if ($result == NULL) {
 				die("Failed");
@@ -132,7 +119,6 @@
 			        FROM users u
 			        WHERE u.username LIKE '%".$search."%'
 					ORDER BY u.username";
-					
 					
 			$result = $conn->query($sql);
 			if ($result == NULL) {

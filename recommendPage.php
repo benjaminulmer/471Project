@@ -11,11 +11,6 @@
 			width: 500px;
 			margin: 50px auto;
 		}
-		.search {
-			padding: 8px 15px;
-			background: rgba(50, 50, 50, 0.2);
-			border: 0px solid #dbdbdb;
-		}
 		.button {
 			position: relative;
 			padding: 6px 15px;
@@ -35,16 +30,6 @@
 		<font color="#3498DB"><center><h1>Recommended Films</h1></center></font>
 		<?php
 		
-		/*
-		Code to open page will look something like this:
-		
-		<form action="studioPage.php" method="get">
-			<input type="submit" class="button" name="ID" value="1">
-		</form>
-		
-		can also be accessed directly with .../studioPage.php?ID=1
-		*/
-
 		$conn;
 		include 'dbConnect.php';
 		
