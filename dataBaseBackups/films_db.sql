@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2017 at 08:13 PM
+-- Generation Time: Apr 11, 2017 at 03:53 AM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `films` (
   `budget` int(11) NOT NULL,
   `boxOffice` int(11) NOT NULL,
   `description` text NOT NULL,
-  `director` int(11) NOT NULL
+  `director` int(11) DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
