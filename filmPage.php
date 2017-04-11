@@ -85,7 +85,7 @@
 		awards();
 		echo "<br><b>Box Office:</b><br>";
 		echo "<u>Budget:</u> $".$row["budget"]."<br>";
-		echo "<u>Gross:</u> $".$row["boxOffice"]."<br>";
+		echo "<u>Gross:</u> &nbsp;&nbsp;$".$row["boxOffice"]."<br>";
 		studios();
 		trailers();
 		sequelsAndSimilar();
