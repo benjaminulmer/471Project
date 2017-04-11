@@ -80,7 +80,7 @@
 						?>
 						<form action = "remove.php" method = "GET">
 						<input type="hidden" name = "filmID" value = "<?php echo $row["filmID"]; ?>">
-						<input type="hidden" name = "ID" value = "<?php echo $userID; ?>">	
+						<input type="hidden" name = "userID" value = "<?php echo $userID; ?>">	
 						<input type="submit" class="button" name="submit" value="Remove"><br><br>
 						</form>
 						<?php
