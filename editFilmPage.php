@@ -68,8 +68,8 @@
 		//Runtime setting
 		echo "<b>Runtime: </b>".$row["runtime"]." minutes<br>";
 		?>
-		<input type="number" name="runtime" value = "<?php echo $row["runtime"]; ?>"><br><br>
-		<input type="submit" style="margin-left:8px" class="button" name="submit" value="Confirm Change"><br><br>
+		<input type="number" name="runtime" value = "<?php echo $row["runtime"]; ?>"><br>
+		<input type="submit" style="margin-left:8px" class="button" name="submit" value="Confirm Changes"><br><br>
 		</form>
 		
 		<?php
@@ -80,12 +80,12 @@
 		genres();
 		
 		//Description setting
-		echo "<br><br>".$description;
+		echo "<br>".$description;
 		?>
 		<form action = "editFilmDesc.php" method = "GET">
 		<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">		
 		<TEXTAREA NAME="description"  ROWS=5 COLS=65 ><?php echo $row["description"]; ?></TEXTAREA><br>
-		<input type="submit" style="margin-left:8px" class="button" name="submit" value="Confirm Change"><br><br>
+		<input type="submit" style="margin-left:8px" class="button" name="submit" value="Confirm Changes"><br>
 		</form>
 		
 		<?php
@@ -106,13 +106,13 @@
 		echo "<u>Budget:</u> $".$row["budget"]."<br>";
 		?>
 		<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">
-		<input type="number" name="budget" value = "<?php echo $row["budget"]; ?>"><br>		
+		<input type="number" name="budget" value = "<?php echo $row["budget"]; ?>"><br><br>		
 		<?php
 		echo "<u>Gross:</u> $".$row["boxOffice"]."";
 		?>
 		<br>
 		<input type="number" name="gross" value = "<?php echo $row["boxOffice"]; ?>"><br>
-		<input type="submit" style="margin-left:8px" class="button" name="submit" value="Confirm Change"><br><br>
+		<input type="submit" style="margin-left:8px" class="button" name="submit" value="Confirm Changes"><br>
 		</form>		
 		<?php
 		
@@ -136,18 +136,30 @@
 				die("Failed");
 			}
 			
-			// Pretty print each genre
 			if($result->num_rows > 0){
-				echo "<b>Genre: </b>";
-				$i = 0;
+				echo "<b>Genre:</b><br>";
 				while($row = $result->fetch_assoc()){
-					if ($i != 0) {
-						echo ", ";
-					}
-					echo $row["genre"];
-					$i++;
+					echo $row["genre"]."<br>";
+					?>
+					<form action = "removeFilmGenre.php" method = "GET">
+					<input type="hidden" name = "filmID" value = "<?php echo $filmID; ?>">
+					<input type="hidden" name = "genre" value = "<?php echo $row["genre"]; ?>">
+					<input type="submit" style="margin-left:8px" class="button" name="submit" value="Delete Genre"><br>
+					</form>
+					<?php
+					
 				}
 			}
+			
+			// Add genres to movie
+			?>
+			<form action = "addFilmGenres.php" method = "GET">
+			<br><font color="#3498DB"><b>Add Genre:</b></font><br>
+			<input type="hidden" name = "filmID" value = "<?php echo $filmID; ?>">
+			Name:
+			<input type="text" name="genre"><br>
+			<input type="submit" style="margin-left:8px" class="button" name="submit" value="Add Genre"><br>
+			</form><?php
 		}	
 			
 		// Prints director
@@ -174,7 +186,7 @@
 				<form action = "removeFilmDirector.php" method = "GET">
 				<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">
 				<input type="hidden" name = "dirID" value = "<?php echo $dirID; ?>">
-				<input type="submit" style="margin-left:8px" class="button" name="submit" value="Delete Director"><br><br>
+				<input type="submit" style="margin-left:8px" class="button" name="submit" value="Delete Director"><br>
 				</form>
 				<?php
 			}
@@ -242,17 +254,17 @@
 					<form action = "removeFilmActor.php" method = "GET">
 					<input type="hidden" name = "filmID" value = "<?php echo $filmID; ?>">
 					<input type="hidden" name = "actID" value = "<?php echo $row["actorID"]; ?>">
-					<input type="submit" class="button" name="submit" value="Delete Actor"><br>
+					<input type="submit" style="margin-left:8px" class="button" name="submit" value="Delete Actor"><br>
 					</form>
 					<?php
 					
 				}
-			}	
+			}
 			
-			// Add Actors to movie
+			// Add actors to movie
 			?>
 			<form action = "addFilmActors.php" method = "GET">
-			<font color="#3498DB"><b>Add Actor (use ID):</b></font><br>
+			<br><font color="#3498DB"><b>Add Actor (use ID):</b></font><br>
 			<input type="hidden" name = "filmID" value = "<?php echo $filmID; ?>">
 			ID:
 			<input style="margin-left:14px" type="number" name="actID"><br>
@@ -262,6 +274,7 @@
 			</form>
 			<br>
 			<b>Actors</b><?php
+			
 			// List the actors and IDS
 			$sql = "SELECT a.ID, name FROM actors AS a, persons AS p
 			WHERE a.ID = p.ID
@@ -273,13 +286,12 @@
 				echo "<table><tr><th>ID</th><th>Name</th></tr>";
 				
 				while($row = $result2->fetch_assoc()) {
-					echo "<tr><td>".$row["ID"]."</td><td>".$row["name"]."</td></tr>";
+					echo "<tr><td>".$row["ID"]."</td><td> &nbsp;&nbsp;&nbsp;".$row["name"]."</td></tr>";
 				}
 			echo "</table>";
 			} else {
 				echo "0 results";
 			}
-			
 		}
 		
 		// Prints awards
