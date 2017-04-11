@@ -5,15 +5,14 @@
 		<meta charset="UTF-8">
 		<title>Edit Film Page</title>
 	</head>
-
-
+	
 	<style>
 		h1 {
 			width: 500px;
 			margin: 50px auto;
 		}
 		.button {
-			width: 249px;
+			width: 250px;
 			padding: 6px 15px;
 			border: 2px solid #3498DB;
 			background-color: #3498DB;
@@ -26,22 +25,11 @@
 		}
 	</style>
 	
-	
 	<body>		
 		<?php include 'header.php' ?>
 		<font color="#3498DB"><center><h1>Film Details</h1></center></font>
 		<?php
 		
-		/*
-		Code to open page will look something like this:
-		
-		<form action="filmPage.php" method="get">
-			<input type="submit" class="button" name="ID" value="3">
-		</form>
-		
-		can also be accessed directly with .../filmPage.php?ID=3
-		*/
-	
 		$conn;
 		include 'dbConnect.php';
 		
@@ -58,7 +46,7 @@
 		?>
 		<form action = "deleteFilm.php" method = "GET">
 		<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">
-		<input type="submit" class = "button" name = "submit" value = "Delete Film from the Database"><br><br>
+		<input type="submit" style="margin-left:8px" class = "button" name = "submit" value = "Delete Film from the Database"><br><br>
 		
 		</form>
 		
@@ -81,10 +69,8 @@
 		echo "<b>Runtime: </b>".$row["runtime"]." minutes<br>";
 		?>
 		<input type="number" name="runtime" value = "<?php echo $row["runtime"]; ?>"><br><br>
-		<input type="submit" class="button" name="submit" value="Edit Info"><br><br>
+		<input type="submit" style="margin-left:8px" class="button" name="submit" value="Confirm Change"><br><br>
 		</form>
-		
-		
 		
 		<?php
 		// Store description and dirID for later
@@ -99,9 +85,8 @@
 		<form action = "editFilmDesc.php" method = "GET">
 		<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">		
 		<TEXTAREA NAME="description"  ROWS=5 COLS=65 ><?php echo $row["description"]; ?></TEXTAREA><br>
-		<input type="submit" class="button" name="submit" value="Edit Description"><br><br>
+		<input type="submit" style="margin-left:8px" class="button" name="submit" value="Confirm Change"><br><br>
 		</form>
-		
 		
 		<?php
 		//check if director is set
@@ -127,7 +112,7 @@
 		?>
 		<br>
 		<input type="number" name="gross" value = "<?php echo $row["boxOffice"]; ?>"><br>
-		<input type="submit" class="button" name="submit" value="Edit Money Info"><br><br>
+		<input type="submit" style="margin-left:8px" class="button" name="submit" value="Confirm Change"><br><br>
 		</form>		
 		<?php
 		
@@ -189,7 +174,7 @@
 				<form action = "removeFilmDirector.php" method = "GET">
 				<input type="hidden" name = "ID" value = "<?php echo $filmID; ?>">
 				<input type="hidden" name = "dirID" value = "<?php echo $dirID; ?>">
-				<input type="submit" class="button" name="submit" value="Delete Director"><br><br>
+				<input type="submit" style="margin-left:8px" class="button" name="submit" value="Delete Director"><br><br>
 				</form>
 				<?php
 			}
@@ -209,9 +194,6 @@
 				</form>
 				Directors
 				<?php
-		
-				
-				
 				
 				// Check connection
 				if ($conn->connect_error) {
@@ -233,8 +215,6 @@
 				} else {
 					echo "0 results";
 				}
-				
-				
 		}
 		
 		// Prints cast
@@ -269,20 +249,20 @@
 				}
 			}	
 			
-			//Add Actors to movie
+			// Add Actors to movie
 			?>
 			<form action = "addFilmActors.php" method = "GET">
-			<font color="#3498DB"><b>Add Actor(Use ID):</b></font><br>
+			<font color="#3498DB"><b>Add Actor (use ID):</b></font><br>
 			<input type="hidden" name = "filmID" value = "<?php echo $filmID; ?>">
 			ID:
-			<input type="number" name="actID"><br>
+			<input style="margin-left:14px" type="number" name="actID"><br>
 			Role:
 			<input type= "text" name = "role"><br>
-			<input type="submit" class="button" name="submit" value="Add Actor"><br>
+			<input type="submit" style="margin-left:8px" class="button" name="submit" value="Add Actor"><br>
 			</form>
 			<br>
 			<b>Actors</b><?php
-			//List the actors and IDS
+			// List the actors and IDS
 			$sql = "SELECT a.ID, name FROM actors AS a, persons AS p
 			WHERE a.ID = p.ID
 			GROUP BY ID";
